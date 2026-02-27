@@ -6,12 +6,12 @@ Shared React component library for the MatchDB staffing platform. Provides Windo
 
 ## Tech Stack
 
-| Layer      | Technology                         |
-| ---------- | ---------------------------------- |
-| Runtime    | React 18 + TypeScript              |
-| Styling    | CSS custom properties (W97 theme)  |
-| Dev Tools  | Storybook 7, ESLint 9              |
-| Bundler    | Consumed via local `file:` link    |
+| Layer     | Technology                        |
+| --------- | --------------------------------- |
+| Runtime   | React 18 + TypeScript             |
+| Styling   | CSS custom properties (W97 theme) |
+| Dev Tools | Storybook 7, ESLint 9             |
+| Bundler   | Consumed via local `file:` link   |
 
 ---
 
@@ -56,43 +56,43 @@ matchingdb-component-library/
 
 ### Atomic
 
-| Component    | Export       | Description                                            |
-| ------------ | ------------ | ------------------------------------------------------ |
-| Alert        | `Alert`      | Dismissable alert banner with variant styling          |
-| TypePill     | `TypePill`   | Colored pill badge for job types, statuses             |
-| Button       | `Button`     | W97-themed button (raised, flat, link) with sizes      |
-| Input        | `Input`      | W97-styled text input                                  |
-| Select       | `Select`     | W97-styled select dropdown                             |
-| Shimmer      | `Shimmer`    | Loading skeleton shimmer placeholder                   |
-| MatchMeter   | `MatchMeter` | Match score progress meter with color variants         |
+| Component  | Export       | Description                                       |
+| ---------- | ------------ | ------------------------------------------------- |
+| Alert      | `Alert`      | Dismissable alert banner with variant styling     |
+| TypePill   | `TypePill`   | Colored pill badge for job types, statuses        |
+| Button     | `Button`     | W97-themed button (raised, flat, link) with sizes |
+| Input      | `Input`      | W97-styled text input                             |
+| Select     | `Select`     | W97-styled select dropdown                        |
+| Shimmer    | `Shimmer`    | Loading skeleton shimmer placeholder              |
+| MatchMeter | `MatchMeter` | Match score progress meter with color variants    |
 
 ### Compound
 
-| Component  | Export      | Description                                              |
-| ---------- | ----------- | -------------------------------------------------------- |
-| DataTable  | `DataTable` | Sortable, paginated table with flash animations          |
-| Toolbar    | `Toolbar`   | Title bar with integrated actions (search, buttons, CSV) |
-| Tabs       | `Tabs`      | W97-themed tab switcher                                  |
-| FilterBar  | `FilterBar` | Horizontal filter chip bar                               |
-| StatBar    | `StatBar`   | Horizontal stat indicators bar                           |
-| Panel      | `Panel`     | W97 raised/sunken panel container                        |
-| Footnote   | `Footnote`  | Footer footnote with `FootnoteSep` separator             |
+| Component | Export      | Description                                              |
+| --------- | ----------- | -------------------------------------------------------- |
+| DataTable | `DataTable` | Sortable, paginated table with flash animations          |
+| Toolbar   | `Toolbar`   | Title bar with integrated actions (search, buttons, CSV) |
+| Tabs      | `Tabs`      | W97-themed tab switcher                                  |
+| FilterBar | `FilterBar` | Horizontal filter chip bar                               |
+| StatBar   | `StatBar`   | Horizontal stat indicators bar                           |
+| Panel     | `Panel`     | W97 raised/sunken panel container                        |
+| Footnote  | `Footnote`  | Footer footnote with `FootnoteSep` separator             |
 
 ---
 
 ## Utilities (`src/utils/`)
 
-| Export              | Description                                               |
-| ------------------- | --------------------------------------------------------- |
-| `fmtCurrency()`     | Formats a number as currency or returns "—"               |
-| `fmtDate()`         | Formats an ISO date string to short readable form         |
-| `fmtList()`         | Joins an array with commas or returns "—"                 |
-| `fmtVal()`          | Returns a displayable value or "—"                        |
-| `formatExperience()`| Formats years of experience as "N yrs"                    |
-| `TYPE_LABELS`       | Map: full_time → "Full Time", contract → "Contract", etc. |
-| `SUB_LABELS`        | Map: c2c → "C2C", direct_hire → "Direct Hire", etc.       |
-| `authHeader()`      | Builds `{ Authorization: 'Bearer …' }` header             |
-| `downloadBlob()`    | Triggers a file download from a Blob response             |
+| Export               | Description                                               |
+| -------------------- | --------------------------------------------------------- |
+| `fmtCurrency()`      | Formats a number as currency or returns "—"               |
+| `fmtDate()`          | Formats an ISO date string to short readable form         |
+| `fmtList()`          | Joins an array with commas or returns "—"                 |
+| `fmtVal()`           | Returns a displayable value or "—"                        |
+| `formatExperience()` | Formats years of experience as "N yrs"                    |
+| `TYPE_LABELS`        | Map: full_time → "Full Time", contract → "Contract", etc. |
+| `SUB_LABELS`         | Map: c2c → "C2C", direct_hire → "Direct Hire", etc.       |
+| `authHeader()`       | Builds `{ Authorization: 'Bearer …' }` header             |
+| `downloadBlob()`     | Triggers a file download from a Blob response             |
 
 ---
 
@@ -128,7 +128,12 @@ This library is consumed as a local dependency via `file:` link in both UI proje
 Import components and utilities:
 
 ```tsx
-import { DataTable, Button, TypePill, fmtCurrency } from "matchdb-component-library";
+import {
+  DataTable,
+  Button,
+  TypePill,
+  fmtCurrency,
+} from "matchdb-component-library";
 import "matchdb-component-library/src/styles/w97-theme.css";
 import "matchdb-component-library/src/styles/w97-base.css";
 import "matchdb-component-library/src/styles/components.css";
@@ -159,14 +164,14 @@ Storybook runs at **http://localhost:6006**.
 
 ## Scripts
 
-| Script                     | Description                         |
-| -------------------------- | ----------------------------------- |
-| `npm run storybook`        | Start Storybook dev server on :6006 |
-| `npm run build-storybook`  | Build static Storybook site         |
-| `npm run lint`             | Run ESLint on `src/`                |
-| `npm run lint:fix`         | Run ESLint with auto-fix            |
-| `npm run typecheck`        | TypeScript type-check (no emit)     |
-| `npm run quality`          | Run lint + typecheck                |
+| Script                    | Description                         |
+| ------------------------- | ----------------------------------- |
+| `npm run storybook`       | Start Storybook dev server on :6006 |
+| `npm run build-storybook` | Build static Storybook site         |
+| `npm run lint`            | Run ESLint on `src/`                |
+| `npm run lint:fix`        | Run ESLint with auto-fix            |
+| `npm run typecheck`       | TypeScript type-check (no emit)     |
+| `npm run quality`         | Run lint + typecheck                |
 
 ---
 
