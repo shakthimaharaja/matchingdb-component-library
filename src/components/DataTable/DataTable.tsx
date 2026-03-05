@@ -125,6 +125,9 @@ export interface DataTableProps<T = unknown> {
 
   /** Extra className on wrapper div */
   className?: string;
+
+  /** Extra content rendered on the right side of the pagination bar (e.g. download buttons) */
+  paginationExtra?: React.ReactNode;
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -143,6 +146,7 @@ interface PaginationBarProps {
   endRow: number;
   goToPage: (p: number) => void;
   changePageSize: (size: number) => void;
+  extra?: React.ReactNode;
 }
 
 const PaginationBar: React.FC<PaginationBarProps> = ({
@@ -154,6 +158,7 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
   endRow,
   goToPage,
   changePageSize,
+  extra,
 }) => {
   const maxVisible = 5;
   const start = Math.max(
@@ -242,6 +247,11 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
           </option>
         ))}
       </select>
+      {extra && (
+        <span style={{ marginLeft: "auto", display: "inline-flex", gap: 4 }}>
+          {extra}
+        </span>
+      )}
     </div>
   );
 };
@@ -302,6 +312,7 @@ function DataTable<T>({
   pageResetKey,
   onRowDoubleClick,
   className,
+  paginationExtra,
 }: DataTableProps<T>): React.ReactElement {
   // ── Pagination state ──
   const isServerSide = serverTotal !== undefined && onPageChange !== undefined;
@@ -575,6 +586,7 @@ function DataTable<T>({
           endRow={endRow}
           goToPage={goToPage}
           changePageSize={changePageSize}
+          extra={paginationExtra}
         />
       )}
     </div>
