@@ -5,12 +5,13 @@
 
 /* ===== PAGE CONTAINER ===== */
 .matchdb-page {
-  min-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  overflow: hidden;
   background: var(--w97-window, #c0c0c0);
-  font-family: "MS Sans Serif", "Segoe UI", Tahoma, sans-serif;
+  font-family: inherit;
   font-weight: 500;
 }
 
@@ -168,13 +169,15 @@
   border-right: 1px solid var(--w97-btn-dark, #404040);
   border-bottom: 1px solid var(--w97-btn-dark, #404040);
   width: 100%;
-  font-size: 11px;
-  padding: 0 4px;
+  font-size: 11.5px;
+  padding: 0 6px;
   font-family: inherit;
   cursor: pointer;
   white-space: nowrap;
   font-weight: 600;
-  height: 22px;
+  height: 24px;
+  min-width: 48px;
+  box-sizing: border-box;
 }
 .matchdb-btn-poke:hover {
   background: #007070;
@@ -199,9 +202,11 @@
   border-left: 1px solid var(--w97-btn-highlight, #fff);
   border-right: 1px solid var(--w97-btn-dark, #404040);
   border-bottom: 1px solid var(--w97-btn-dark, #404040);
-  font-size: 11px;
-  padding: 0 4px;
-  height: 22px;
+  font-size: 11.5px;
+  padding: 0 6px;
+  height: 24px;
+  min-width: 32px;
+  box-sizing: border-box;
   font-family: inherit;
   cursor: pointer;
   white-space: nowrap;
@@ -329,7 +334,7 @@
   flex-shrink: 0;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
   letter-spacing: 0.3px;
-  font-family: "Courier New", monospace;
+  font-family: inherit;
 }
 .matchdb-panel-title-left {
   display: flex;
@@ -356,7 +361,7 @@
   color: var(--w97-titlebar-text, #fff);
   opacity: 0.85;
   letter-spacing: 0.1px;
-  font-family: "MS Sans Serif", Tahoma, sans-serif;
+  font-family: inherit;
   white-space: nowrap;
 }
 
@@ -412,7 +417,7 @@
   border-radius: 0;
   background: var(--w97-btn-face, #f4f4f4);
   cursor: pointer;
-  font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+  font-family: inherit;
   text-align: left;
   outline: none;
 }
@@ -483,6 +488,7 @@
   overflow: hidden;
   min-width: 0;
   min-height: 0;
+  height: 0;
   border-top: 1px solid var(--w97-btn-shadow, #808080);
   border-left: 1px solid var(--w97-btn-shadow, #808080);
 }
@@ -504,11 +510,12 @@
 /* ===== TABLE ===== */
 .matchdb-table {
   width: 100%;
+  height: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 12px;
-  font-family: "MS Sans Serif", "Microsoft Sans Serif", Tahoma, sans-serif;
-  line-height: 1.4;
+  font-size: 12.5px;
+  font-family: inherit;
+  line-height: 1.2;
 }
 .matchdb-table th {
   background: var(--w97-btn-face, #c0c0c0);
@@ -517,13 +524,17 @@
   border-left: 1px solid var(--w97-btn-highlight, #fff);
   border-right: 1px solid var(--w97-btn-dark, #404040);
   border-bottom: 1px solid var(--w97-btn-dark, #404040);
-  padding: 2px 5px;
+  padding: 4px 6px;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  box-sizing: border-box;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 12.5px;
+  font-weight: 600;
   letter-spacing: 0.2px;
   position: sticky;
   top: 0;
@@ -543,14 +554,18 @@
 
 .matchdb-table td {
   border: 1px solid var(--w97-btn-shadow, #808080);
-  padding: 1px 5px;
+  padding: 4px 6px;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  box-sizing: border-box;
   vertical-align: middle;
   color: var(--w97-text, #000);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .matchdb-table tbody tr:nth-child(odd) {
@@ -686,19 +701,19 @@
 /* ===== ROW-NUMBER COLUMN (from shell-ui DataTable) ===== */
 .pub-th-rn {
   text-align: right !important;
-  padding: 2px 2px 2px 0 !important;
+  padding: 2px 4px 2px 2px !important;
   color: var(--w97-text-secondary, #808080) !important;
   font-weight: 500 !important;
   font-size: 10px !important;
-  width: 18px !important;
-  min-width: 18px !important;
-  max-width: 18px !important;
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
 }
 .pub-td-rn {
   text-align: right;
   font-size: 10px;
   color: var(--w97-text-secondary, #808080);
-  padding: 0 2px 0 0 !important;
+  padding: 0 4px 0 2px !important;
   background: var(--w97-btn-face, #c0c0c0) !important;
   border-right: 1px solid var(--w97-btn-shadow, #808080) !important;
   border-top: 1px solid var(--w97-btn-shadow, #808080) !important;
@@ -706,26 +721,38 @@
   border-bottom: 1px solid var(--w97-btn-shadow, #808080) !important;
   user-select: none;
   white-space: nowrap;
-  font-family: "Courier New", monospace;
-  width: 18px !important;
-  min-width: 18px !important;
-  max-width: 18px !important;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
 }
 
 /* ===== EMPTY / PADDING / FILLER ROWS ===== */
 .pub-empty-row td {
-  padding: 1px 5px;
   color: transparent;
   user-select: none;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  box-sizing: border-box;
 }
 .pub-empty-row .pub-td-rn {
   color: var(--w97-text-secondary, #808080);
   opacity: 0.35;
 }
 .matchdb-filler-row td {
-  height: 22px;
+  color: transparent;
   pointer-events: none;
   user-select: none;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  box-sizing: border-box;
+}
+.matchdb-filler-row .pub-td-rn {
+  color: var(--w97-text-secondary, #808080);
+  opacity: 0.35;
 }
 .matchdb-filler-row:hover {
   background: inherit !important;
@@ -782,7 +809,11 @@
 
 /* ===== SKELETON LOADING ===== */
 .matchdb-skeleton-row td {
-  padding: 6px 4px;
+  padding: 4px 6px;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  box-sizing: border-box;
   background: var(--w97-window, #c0c0c0);
 }
 .matchdb-skeleton-row:hover {

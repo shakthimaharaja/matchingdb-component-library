@@ -7,11 +7,214 @@
    intentionally NOT included here — it stays in shell-ui's own CSS.
    ============================================================================= */
 
-/* ── Default font stack ──────────────────────────────────────────────────── */
+/* ── Default font stack (iOS / SF Pro inspired) ──────────────────────────── */
 body {
-  font-family: "MS Sans Serif", "Microsoft Sans Serif", Tahoma, Verdana, Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, sans-serif;
   font-size: var(--w97-font-base, 13px);
+  /* ── Cross-platform high-quality text rendering ── */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-synthesis: none;
+}
+
+/* ── Performance: enable GPU compositing for animated elements ────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── Responsive viewport helpers ─────────────────────────────────────────── */
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Focus-visible for touch devices ─────────────────────────────────────── */
+@media (hover: none) {
+  button:focus-visible,
+  a:focus-visible {
+    outline-offset: 2px;
+  }
+}
+
+/* ── Monospace font stack (shared) ───────────────────────────────────── */
+.matchdb-mono {
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", "Courier New", Courier,
+    monospace;
+}
+
+/* ── Utility: flex column fill (used by MFE wrappers) ──────────────── */
+.matchdb-flex-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ── Utility: clickable element ────────────────────────────────────── */
+.matchdb-clickable {
+  cursor: pointer;
+}
+
+/* ── Utility: subtle / hint text ───────────────────────────────────── */
+.matchdb-hint {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+/* ── Utility: bold-accent (orange highlight) ───────────────────────── */
+.matchdb-accent {
+  color: #e8850f;
+  font-weight: 700;
+}
+
+/* ── Shared modal overlay ──────────────────────────────────────────── */
+.matchdb-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: matchdb-modal-overlay-in 0.25s ease-out;
+}
+.matchdb-modal-overlay--top {
+  align-items: flex-start;
+  padding: 20px 16px;
+  overflow-y: auto;
+  z-index: 3000;
+}
+
+/* ── Shared modal window chrome (Win97) ────────────────────────────── */
+.matchdb-modal-window {
+  background: var(--w97-window, #c0c0c0);
+  border-top: 2px solid var(--w97-btn-highlight, #ffffff);
+  border-left: 2px solid var(--w97-btn-highlight, #ffffff);
+  border-right: 2px solid var(--w97-btn-dark, #404040);
+  border-bottom: 2px solid var(--w97-btn-dark, #404040);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: var(--w97-text, #000);
+  animation: matchdb-modal-slide-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.matchdb-modal-window--fit {
+  width: fit-content;
+}
+
+/* ── Shared modal titlebar ─────────────────────────────────────────── */
+.matchdb-modal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── Shared modal body scroll ──────────────────────────────────────── */
+.matchdb-modal-body {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+/* ── Shared animation keyframes ────────────────────────────────────── */
+@keyframes matchdb-modal-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes matchdb-modal-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes matchdb-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Collapsed nav text helper ─────────────────────────────────────── */
+.matchdb-collapsed-text {
+  text-align: center;
+  padding: 4px 0;
+}
+.matchdb-collapsed-icon {
+  font-size: 14px;
+  cursor: default;
+}
+
+/* ── MFE chevron helper ────────────────────────────────────────────── */
+.matchdb-chevron {
+  margin-left: auto;
+  font-size: 9px;
+  opacity: 0.6;
+}
+
+/* ── Theme transition (smooth crossfade when switching themes) ────────────── */
+*,
+*::before,
+*::after {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+/* Exclude elements where transition causes layout jank */
+table *,
+canvas,
+video,
+img,
+svg,
+.w97-shimmer,
+.matchdb-meter-fill,
+[class*="pub-row-flash"],
+[class*="pub-row-delete-flash"],
+input,
+textarea {
+  transition: none;
+}
+
+/* ── Page / route transition keyframes ───────────────────────────────────── */
+@keyframes matchdb-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.matchdb-page-transition {
+  animation: matchdb-page-enter 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 /* ── 3D raised button helper ──────────────────────────────────────────── */
@@ -214,4 +417,27 @@ select:focus-visible,
 textarea:focus-visible {
   outline: 2px dotted var(--w97-navy, #235a81);
   outline-offset: 1px;
+}
+
+/* ── Modal title sub-elements ────────────────────────────────────────────── */
+.matchdb-modal-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.matchdb-modal-title {
+  font-weight: 700;
+  font-size: 12px;
+  flex: 1;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ── Responsive: ensure modals fit small screens ─────────────────────────── */
+@media (max-width: 480px) {
+  .matchdb-modal-overlay {
+    padding: 8px;
+  }
+  .matchdb-modal-window {
+    max-width: 100vw;
+    max-height: 95vh;
+  }
 }

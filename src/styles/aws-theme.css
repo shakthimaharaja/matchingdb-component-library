@@ -1,0 +1,1629 @@
+/* =============================================================================
+   AWS Modern Theme
+   Activated by [data-style="modern"] on <body>.
+   Does NOT modify w97-theme.css — fully independent override layer.
+
+   Design tokens (AWS Console visual language):
+     Background:  #f2f3f3 (workspace)  |  #ffffff (cards/sidebar)
+     Text:        #16191f (primary)    |  #545b64 (secondary)
+     Border:      #e9ebed (dividers)   |  #aab7b8 (inputs)
+     Interactive: #0073bb (AWS blue)   |  #005d96 (hover)
+     CTA:         #ff9900 (AWS orange)
+     Success:     #1d8102             |  Error: #d13212
+     Radius:      4px (controls)       |  8px (cards/modals)
+     Font:        "Amazon Ember", "Open Sans", sans-serif
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. CSS CUSTOM PROPERTY OVERRIDES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"],
+[data-style="modern"] .legacy-shell-root {
+  --w97-titlebar-from: #232f3e;
+  --w97-titlebar-to: #232f3e;
+  --w97-titlebar-text: #ffffff;
+  --w97-sidebar-bg: #ffffff;
+  --w97-sidebar-active: transparent;
+  --w97-sidebar-active-text: #0073bb;
+  --w97-nav-hover: #f2f3f3;
+  --w97-nav-text: #16191f;
+  --w97-content-bg: #f2f3f3;
+  --w97-desktop: #f2f3f3;
+  --w97-window: #ffffff;
+  --w97-window-alt: #fafafa;
+  --w97-text: #16191f;
+  --w97-text-secondary: #545b64;
+  --w97-btn-face: #ffffff;
+  --w97-btn-highlight: #ffffff;
+  --w97-btn-shadow: #aab7b8;
+  --w97-btn-dark: #aab7b8;
+  --w97-input-bg: #ffffff;
+  --w97-input-border: #879596;
+  --w97-border-light: #e9ebed;
+  --w97-border-dark: #aab7b8;
+  --w97-breadcrumb-bg: #f2f3f3;
+  --w97-footer-bg: #f2f3f3;
+  --w97-status-bg: #f2f3f3;
+  --w97-status-border-top: #e9ebed;
+  --w97-scrollbar-track: #f2f3f3;
+  --w97-scrollbar-thumb: #aab7b8;
+  --w97-blue: #0073bb;
+  --w97-navy: #0073bb;
+  --w97-orange: #ff9900;
+  --w97-red: #d13212;
+  --w97-green: #1d8102;
+  --w97-teal: #0073bb;
+  --w97-yellow: #ff9900;
+  --w97-sky: #f2f3f3;
+  --w97-shimmer-base: #e9ebed;
+  --w97-shimmer-highlight: #f5f5f5;
+  --mfe-chip-1: #0073bb;
+  --mfe-chip-2: #1d8102;
+  --mfe-chip-3: #ff9900;
+  --mfe-chip-4: #d13212;
+  --mfe-chip-5: #7b1fa2;
+  --mfe-chip-6: #1565c0;
+  --mfe-chip-7: #546e7a;
+  --mfe-chip-8: #c62828;
+  --mfe-chip-9: #00838f;
+  --mfe-chip-10: #558b2f;
+}
+
+/* Modern + Dark */
+[data-style="modern"][data-theme="dark"],
+[data-style="modern"] .legacy-shell-root.dark {
+  --w97-titlebar-from: #161e2d;
+  --w97-titlebar-to: #161e2d;
+  --w97-sidebar-bg: #1a2332;
+  --w97-sidebar-active-text: #4da6e8;
+  --w97-nav-hover: #243447;
+  --w97-nav-text: #d9d9d9;
+  --w97-content-bg: #0f1b2d;
+  --w97-desktop: #0f1b2d;
+  --w97-window: #1a2332;
+  --w97-window-alt: #243447;
+  --w97-text: #d9d9d9;
+  --w97-text-secondary: #aab7b8;
+  --w97-btn-face: #1a2332;
+  --w97-btn-highlight: #243447;
+  --w97-btn-shadow: #3d5166;
+  --w97-btn-dark: #0f1b2d;
+  --w97-input-bg: #1a2332;
+  --w97-input-border: #3d5166;
+  --w97-border-light: #3d5166;
+  --w97-border-dark: #0f1b2d;
+  --w97-breadcrumb-bg: #161e2d;
+  --w97-footer-bg: #161e2d;
+  --w97-status-bg: #161e2d;
+  --w97-status-border-top: #0f1b2d;
+  --w97-scrollbar-track: #0f1b2d;
+  --w97-scrollbar-thumb: #3d5166;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. GLOBAL FONT & SCROLLBAR
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] body,
+[data-style="modern"] .legacy-shell-root,
+[data-style="modern"] *:not(.pi) {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, sans-serif !important;
+}
+/* Preserve PrimeIcons font so icons render correctly */
+[data-style="modern"] .pi {
+  font-family: "primeicons" !important;
+}
+
+[data-style="modern"] ::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+[data-style="modern"] ::-webkit-scrollbar-track {
+  background: var(--w97-scrollbar-track) !important;
+}
+[data-style="modern"] ::-webkit-scrollbar-thumb {
+  background: var(--w97-scrollbar-thumb) !important;
+  border-radius: 4px !important;
+  border: none !important;
+}
+[data-style="modern"] ::-webkit-scrollbar-thumb:hover {
+  background: #879596 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. SHELL HEADER & SIDEBAR
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .legacy-shell-header {
+  background: #232f3e !important;
+  border-bottom: none !important;
+  height: 36px !important;
+}
+
+[data-style="modern"] .legacy-shell-brand-logo {
+  display: none;
+}
+
+[data-style="modern"] .legacy-shell-brand::before {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background: #ff9900;
+  border-radius: 3px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+[data-style="modern"] .legacy-shell-brand-title {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+[data-style="modern"] .legacy-shell-brand-subtitle {
+  color: #ff9900;
+  font-weight: 700;
+  font-size: 12px;
+  text-shadow: none;
+}
+
+[data-style="modern"] .legacy-shell-toggle.p-button,
+[data-style="modern"] .legacy-shell-signout.p-button,
+[data-style="modern"] .legacy-shell-darkmode.p-button {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #d5dbdb !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .legacy-shell-toggle.p-button:hover,
+[data-style="modern"] .legacy-shell-signout.p-button:hover,
+[data-style="modern"] .legacy-shell-darkmode.p-button:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Sidebar — white, AWS service-nav style */
+[data-style="modern"] .legacy-shell-sidebar {
+  background: var(--w97-sidebar-bg) !important;
+  border-right: 1px solid #e9ebed !important;
+  box-shadow: none !important;
+}
+[data-style="modern"] .legacy-shell-nav-section {
+  color: #545b64 !important;
+  font-weight: 700 !important;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+[data-style="modern"] .legacy-shell-nav-item {
+  color: #16191f !important;
+  border-left: 3px solid transparent;
+  border-radius: 0 !important;
+  font-weight: 400;
+  font-size: 13px;
+}
+[data-style="modern"] .legacy-shell-nav-item:hover {
+  background: #f2f3f3 !important;
+  color: #0073bb !important;
+}
+[data-style="modern"] .legacy-shell-nav-item.active {
+  background: #f0f7ff !important;
+  border-left: 3px solid #0073bb !important;
+  color: #0073bb !important;
+  font-weight: 600;
+}
+
+/* Content area — rounded inner region like AWS console */
+[data-style="modern"] .legacy-shell-content {
+  background: #f2f3f3 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Pagehead — compact for 25-row viewport */
+[data-style="modern"] .legacy-shell-pagehead {
+  padding: 2px 12px !important;
+  border-top: none !important;
+  border-bottom: 1px solid #e9ebed !important;
+  background: #fafafa !important;
+}
+[data-style="modern"] .legacy-shell-pagehead-right {
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+[data-style="modern"] .legacy-shell-footer,
+[data-style="modern"] .legacy-shell-statusbar {
+  background: #fafafa !important;
+  color: #545b64 !important;
+  border-top: 1px solid #e9ebed !important;
+}
+[data-style="modern"] .legacy-shell-breadcrumb {
+  background: transparent !important;
+  color: #545b64 !important;
+  font-size: 12px;
+}
+
+/* Sidebar user panel */
+[data-style="modern"] .legacy-shell-sidebar-user {
+  border-bottom: 1px solid #e9ebed !important;
+  background: #ffffff !important;
+}
+
+/* Account dropdown panel */
+[data-style="modern"] .shell-account-panel {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
+}
+[data-style="modern"] .shell-account-panel-title {
+  background: #232f3e !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+[data-style="modern"] .shell-account-panel-close {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .shell-account-row {
+  border-bottom-color: #f2f3f3 !important;
+}
+[data-style="modern"] .shell-account-panel-footer {
+  background: #fafafa !important;
+  border-top: 1px solid #e9ebed !important;
+  border-radius: 0 0 8px 8px !important;
+}
+[data-style="modern"] .shell-account-panel-signout {
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+}
+[data-style="modern"] .shell-account-panel-signout:hover {
+  background: #f2f3f3 !important;
+  border-color: #0073bb !important;
+}
+
+/* Avatar in modern mode */
+[data-style="modern"] .legacy-shell-avatar.p-avatar {
+  border-radius: 50% !important;
+  border: none !important;
+  background: #0073bb !important;
+  color: #ffffff !important;
+}
+
+/* Rosette badges */
+[data-style="modern"] .rosette-body {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Plan tag */
+[data-style="modern"] .legacy-shell-plan.p-tag {
+  border-radius: 4px !important;
+  border: none !important;
+}
+
+/* User hover in header */
+[data-style="modern"] .legacy-shell-user:hover {
+  border-color: transparent !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px;
+}
+
+/* Dark mode sidebar overrides */
+[data-style="modern"][data-theme="dark"] .legacy-shell-header,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-header {
+  background: #161e2d !important;
+  border-bottom: none !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-shell-sidebar,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-sidebar {
+  background: #1a2332 !important;
+  border-right-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-shell-nav-item {
+  color: #d5dbdb !important;
+}
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-nav-item {
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-shell-nav-section,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-nav-section {
+  color: #879596 !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-shell-nav-item:hover,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-nav-item:hover {
+  background: #243447 !important;
+  color: #4da6e8 !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-shell-nav-item.active,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-nav-item.active {
+  background: #1e3a5f !important;
+  border-left-color: #539fe5 !important;
+  color: #539fe5 !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-shell-content,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-content {
+  background: #0f1b2d !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-shell-footer,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-footer,
+[data-style="modern"][data-theme="dark"] .legacy-shell-statusbar,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-statusbar {
+  background: #161e2d !important;
+  color: #879596 !important;
+  border-top-color: #2a3a4e !important;
+}
+
+/* Dark mode — account panel */
+[data-style="modern"][data-theme="dark"] .shell-account-panel,
+[data-style="modern"] .legacy-shell-root.dark .shell-account-panel {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .shell-account-panel-title,
+[data-style="modern"] .legacy-shell-root.dark .shell-account-panel-title {
+  background: #161e2d !important;
+}
+[data-style="modern"][data-theme="dark"] .shell-account-row,
+[data-style="modern"] .legacy-shell-root.dark .shell-account-row {
+  border-bottom-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .shell-account-label,
+[data-style="modern"] .legacy-shell-root.dark .shell-account-label {
+  color: #879596 !important;
+}
+[data-style="modern"][data-theme="dark"] .shell-account-value,
+[data-style="modern"] .legacy-shell-root.dark .shell-account-value {
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .shell-account-panel-footer,
+[data-style="modern"] .legacy-shell-root.dark .shell-account-panel-footer {
+  background: #161e2d !important;
+  border-top-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .shell-account-panel-signout,
+[data-style="modern"] .legacy-shell-root.dark .shell-account-panel-signout {
+  background: #243447 !important;
+  border-color: #3d5166 !important;
+  color: #d5dbdb !important;
+}
+
+/* Dark mode sidebar user */
+[data-style="modern"][data-theme="dark"] .legacy-shell-sidebar-user,
+[data-style="modern"] .legacy-shell-root.dark .legacy-shell-sidebar-user {
+  background: #1a2332 !important;
+  border-bottom-color: #2a3a4e !important;
+}
+
+/* ─── Dark mode: CONTENT ELEMENTS ───────────────────────────────────────────── */
+
+/* Buttons */
+[data-style="modern"][data-theme="dark"] .matchdb-btn,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-btn {
+  background: #1a2332 !important;
+  border-color: #3d5166 !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-btn:hover,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-btn:hover {
+  background: #243447 !important;
+  border-color: #539fe5 !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-btn-primary,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-btn-primary {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border-color: #0073bb !important;
+}
+
+/* DataTable panel & title */
+[data-style="modern"][data-theme="dark"] .matchdb-panel,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-panel {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-panel-title,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-panel-title {
+  color: #d5dbdb !important;
+}
+
+/* Table */
+[data-style="modern"][data-theme="dark"] .matchdb-table,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-table {
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-table th,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-table th {
+  background: #161e2d !important;
+  color: #879596 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-table td,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-table td {
+  color: #d5dbdb !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-table tr,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-table tr {
+  background: #1a2332 !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-table tr:hover,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-table tr:hover {
+  background: #243447 !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-filler-row td,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-filler-row td {
+  background: #1a2332 !important;
+}
+
+/* Stat cards */
+[data-style="modern"][data-theme="dark"] .matchdb-stat-rect,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-stat-rect {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-stat-rect:hover,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-stat-rect:hover {
+  background: #1a2332 !important;
+  border-color: #539fe5 !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-stat-value,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-stat-value {
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-stat-label,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-stat-label {
+  color: #879596 !important;
+}
+
+/* Pagination */
+[data-style="modern"][data-theme="dark"] .matchdb-pg-btn,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-pg-btn {
+  background: #1a2332 !important;
+  border-color: #3d5166 !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-pg-btn:hover,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-pg-btn:hover {
+  background: #243447 !important;
+  border-color: #539fe5 !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-pg-active,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-pg-active {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border-color: #0073bb !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-pg-select,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-pg-select {
+  background: #1a2332 !important;
+  border-color: #3d5166 !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-pg-info,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-pg-info {
+  color: #879596 !important;
+}
+
+/* Alerts */
+[data-style="modern"][data-theme="dark"] .matchdb-alert,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-alert {
+  background: #1e3a5f !important;
+  border-color: #539fe5 !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-alert-success,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-alert-success {
+  background: #0d2818 !important;
+  border-color: #037f0c !important;
+  color: #4ade80 !important;
+}
+[data-style="modern"][data-theme="dark"] .matchdb-alert-error,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-alert-error {
+  background: #3b1010 !important;
+  border-color: #d13212 !important;
+  color: #f87171 !important;
+}
+
+/* Modals */
+[data-style="modern"][data-theme="dark"] .detail-modal,
+[data-style="modern"] .legacy-shell-root.dark .detail-modal,
+[data-style="modern"][data-theme="dark"] .rm-window,
+[data-style="modern"] .legacy-shell-root.dark .rm-window,
+[data-style="modern"][data-theme="dark"] .jpm-window,
+[data-style="modern"] .legacy-shell-root.dark .jpm-window {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .detail-modal-titlebar,
+[data-style="modern"] .legacy-shell-root.dark .detail-modal-titlebar,
+[data-style="modern"][data-theme="dark"] .rm-titlebar,
+[data-style="modern"] .legacy-shell-root.dark .rm-titlebar {
+  background: #161e2d !important;
+  border-bottom-color: #2a3a4e !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .detail-modal-body,
+[data-style="modern"] .legacy-shell-root.dark .detail-modal-body {
+  background: #1a2332 !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .detail-section h3,
+[data-style="modern"] .legacy-shell-root.dark .detail-section h3 {
+  color: #539fe5 !important;
+  border-bottom-color: #2a3a4e !important;
+}
+
+/* Inputs in dark mode */
+[data-style="modern"][data-theme="dark"]
+  input:not(.p-inputtext):not([class*="p-"]),
+[data-style="modern"][data-theme="dark"] select:not([class*="p-"]),
+[data-style="modern"][data-theme="dark"] textarea:not([class*="p-"]),
+[data-style="modern"][data-theme="dark"] .rm-input,
+[data-style="modern"][data-theme="dark"] .legacy-row input,
+[data-style="modern"][data-theme="dark"] .legacy-row select,
+[data-style="modern"][data-theme="dark"] .legacy-row textarea,
+[data-style="modern"][data-theme="dark"] .pjp-paste-area,
+[data-style="modern"][data-theme="dark"] .pjp-desc-area {
+  background: #0f1b2d !important;
+  border-color: #3d5166 !important;
+  color: #d5dbdb !important;
+}
+
+/* Forms & pages */
+[data-style="modern"][data-theme="dark"] .legacy-form-page,
+[data-style="modern"] .legacy-shell-root.dark .legacy-form-page,
+[data-style="modern"][data-theme="dark"] .pjp-body,
+[data-style="modern"] .legacy-shell-root.dark .pjp-body {
+  background: #0f1b2d !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-form-shell,
+[data-style="modern"] .legacy-shell-root.dark .legacy-form-shell,
+[data-style="modern"][data-theme="dark"] .pjp-paste-panel,
+[data-style="modern"] .legacy-shell-root.dark .pjp-paste-panel {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-fieldset,
+[data-style="modern"] .legacy-shell-root.dark .legacy-fieldset {
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-fieldset legend,
+[data-style="modern"] .legacy-shell-root.dark .legacy-fieldset legend {
+  color: #879596 !important;
+}
+[data-style="modern"][data-theme="dark"] .legacy-btn,
+[data-style="modern"] .legacy-shell-root.dark .legacy-btn,
+[data-style="modern"][data-theme="dark"] .rm-btn,
+[data-style="modern"] .legacy-shell-root.dark .rm-btn,
+[data-style="modern"][data-theme="dark"] .pub-btn,
+[data-style="modern"] .legacy-shell-root.dark .pub-btn {
+  background: #1a2332 !important;
+  border-color: #3d5166 !important;
+  color: #d5dbdb !important;
+}
+
+/* Public jobs dark */
+[data-style="modern"][data-theme="dark"] .pub-section,
+[data-style="modern"] .legacy-shell-root.dark .pub-section {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .pub-section-titlebar,
+[data-style="modern"] .legacy-shell-root.dark .pub-section-titlebar {
+  background: #1a2332 !important;
+  border-bottom-color: #2a3a4e !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .pub-statusbar,
+[data-style="modern"] .legacy-shell-root.dark .pub-statusbar {
+  background: #161e2d !important;
+  border-top-color: #2a3a4e !important;
+  color: #879596 !important;
+}
+
+/* Membership gate dark */
+[data-style="modern"][data-theme="dark"] .mg-landing,
+[data-style="modern"] .legacy-shell-root.dark .mg-landing {
+  background: #0f1b2d !important;
+}
+[data-style="modern"][data-theme="dark"] .mg-window,
+[data-style="modern"] .legacy-shell-root.dark .mg-window {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .mg-pkg-card,
+[data-style="modern"] .legacy-shell-root.dark .mg-pkg-card {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+[data-style="modern"][data-theme="dark"] .mg-pkg-highlighted,
+[data-style="modern"] .legacy-shell-root.dark .mg-pkg-highlighted {
+  background: #1e3a5f !important;
+  border-color: #539fe5 !important;
+}
+
+/* Type pills / badges in dark */
+[data-style="modern"][data-theme="dark"] .matchdb-type-pill,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-type-pill,
+[data-style="modern"][data-theme="dark"] .pub-type-badge,
+[data-style="modern"] .legacy-shell-root.dark .pub-type-badge {
+  background: #243447 !important;
+  border-color: #3d5166 !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .pub-filter-badge,
+[data-style="modern"] .legacy-shell-root.dark .pub-filter-badge {
+  background: #ff9900 !important;
+  color: #16191f !important;
+}
+
+/* Skill tags in dark */
+[data-style="modern"][data-theme="dark"] .rm-skill-tag,
+[data-style="modern"][data-theme="dark"] .pub-skill-tag,
+[data-style="modern"][data-theme="dark"] .detail-tag,
+[data-style="modern"][data-theme="dark"] .legacy-tag,
+[data-style="modern"][data-theme="dark"] .legacy-tag-readonly,
+[data-style="modern"][data-theme="dark"] .pjp-chip {
+  background: #1e3a5f !important;
+  border-color: #3d5166 !important;
+  color: #539fe5 !important;
+}
+
+/* Selection bar dark */
+[data-style="modern"][data-theme="dark"] .matchdb-selection-bar,
+[data-style="modern"] .legacy-shell-root.dark .matchdb-selection-bar {
+  background: #1e3a5f !important;
+  border-color: #539fe5 !important;
+  color: #539fe5 !important;
+}
+
+/* MUI dark */
+[data-style="modern"][data-theme="dark"] .MuiPaper-root,
+[data-style="modern"] .legacy-shell-root.dark .MuiPaper-root {
+  background-color: #1a2332 !important;
+  border-color: #2a3a4e !important;
+  color: #d5dbdb !important;
+}
+[data-style="modern"][data-theme="dark"] .MuiCard-root,
+[data-style="modern"] .legacy-shell-root.dark .MuiCard-root {
+  border-color: #2a3a4e !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. BASE BUTTONS  (.matchdb-btn)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .matchdb-btn {
+  height: 32px;
+  font-size: 14px;
+  font-weight: 400;
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  padding: 0 16px;
+  letter-spacing: 0;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+[data-style="modern"] .matchdb-btn:hover {
+  background: #fafafa !important;
+  border-color: #16191f !important;
+}
+[data-style="modern"] .matchdb-btn:active {
+  background: #e9ebed !important;
+}
+[data-style="modern"] .matchdb-btn:focus-visible {
+  outline: 2px solid #0073bb;
+  outline-offset: 2px;
+}
+
+[data-style="modern"] .matchdb-btn-primary {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border-color: #0073bb !important;
+  outline: none !important;
+}
+[data-style="modern"] .matchdb-btn-primary:hover {
+  background: #005d96 !important;
+  border-color: #005d96 !important;
+}
+
+[data-style="modern"] .matchdb-btn-poke {
+  background: #037f0c !important;
+  color: #ffffff !important;
+  border: 1px solid #037f0c !important;
+  border-radius: 8px !important;
+  height: 28px;
+}
+[data-style="modern"] .matchdb-btn-poke:hover {
+  background: #025d09 !important;
+}
+[data-style="modern"] .matchdb-btn-poke:disabled {
+  background: #e9ebed !important;
+  border-color: #aab7b8 !important;
+  color: #687078 !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
+
+[data-style="modern"] .matchdb-btn-email {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border: 1px solid #0073bb !important;
+  border-radius: 8px !important;
+  height: 28px;
+}
+[data-style="modern"] .matchdb-btn-email:hover {
+  background: #005d96 !important;
+}
+
+[data-style="modern"] .matchdb-btn-expand {
+  background: transparent !important;
+  border: none !important;
+  color: #0073bb !important;
+}
+[data-style="modern"] .matchdb-btn-expand:hover {
+  color: #005d96 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. PAGINATION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .matchdb-pagination {
+  background: #ffffff !important;
+  border-top: 1px solid #e9ebed !important;
+  padding: 3px 12px !important;
+  gap: 4px !important;
+  font-size: 12px;
+}
+[data-style="modern"] .matchdb-page-btn {
+  height: 24px;
+  min-width: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  padding: 0 8px;
+}
+[data-style="modern"] .matchdb-page-btn:hover {
+  background: #fafafa !important;
+  border-color: #16191f !important;
+}
+[data-style="modern"] .matchdb-page-btn-active {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border-color: #0073bb !important;
+}
+[data-style="modern"] .matchdb-page-btn-active:hover {
+  background: #005d96 !important;
+}
+[data-style="modern"] .matchdb-page-input {
+  height: 24px;
+  font-size: 12px;
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  padding: 0 6px;
+}
+[data-style="modern"] .matchdb-page-input:focus {
+  border-color: #0073bb !important;
+  outline: 2px solid rgba(0, 115, 187, 0.2) !important;
+}
+[data-style="modern"] .matchdb-page-label {
+  color: #545b64 !important;
+  font-size: 12px;
+}
+[data-style="modern"] .matchdb-select {
+  height: 24px !important;
+  font-size: 12px !important;
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+}
+[data-style="modern"] .matchdb-select:focus {
+  border-color: #0073bb !important;
+  outline: 2px solid rgba(0, 115, 187, 0.2) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. DATATABLE — table, panel, toolbar, tabs
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .matchdb-page {
+  background: #f2f3f3 !important;
+}
+
+[data-style="modern"] .matchdb-table-wrap {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+[data-style="modern"] .matchdb-panel {
+  background: #ffffff !important;
+  border-radius: 8px !important;
+  border: 1px solid #e9ebed !important;
+  overflow: hidden;
+}
+[data-style="modern"] .matchdb-panel-title {
+  background: #ffffff !important;
+  color: #16191f !important;
+  border-bottom: 1px solid #e9ebed !important;
+  font-weight: 700;
+  font-size: 13px;
+  text-shadow: none !important;
+  padding: 5px 12px !important;
+}
+
+[data-style="modern"] .matchdb-toolbar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e9ebed !important;
+  padding: 8px 12px !important;
+}
+
+[data-style="modern"] .matchdb-tabs {
+  background: #ffffff !important;
+  border-bottom: 2px solid #e9ebed !important;
+}
+[data-style="modern"] .matchdb-tab {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  color: #545b64 !important;
+  font-size: 14px;
+  padding: 10px 16px !important;
+  border-radius: 0 !important;
+}
+[data-style="modern"] .matchdb-tab:hover {
+  color: #0073bb !important;
+  background: #f7f9fc !important;
+}
+[data-style="modern"] .matchdb-tab.active,
+[data-style="modern"] .matchdb-tab[data-active="true"] {
+  color: #0073bb !important;
+  border-bottom: 3px solid #0073bb !important;
+  font-weight: 700;
+  background: transparent !important;
+}
+
+[data-style="modern"] .matchdb-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+[data-style="modern"] .matchdb-table th {
+  background: #fafafa !important;
+  color: #545b64 !important;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 1px solid #e9ebed !important;
+  padding: 4px 10px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+  box-sizing: border-box !important;
+}
+[data-style="modern"] .matchdb-table td {
+  border: none !important;
+  border-bottom: 1px solid #f2f3f3 !important;
+  padding: 0 10px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+  box-sizing: border-box !important;
+  color: #16191f;
+  font-size: 13px;
+  vertical-align: middle;
+}
+[data-style="modern"] .matchdb-table tbody tr:nth-child(odd) {
+  background: #ffffff !important;
+}
+[data-style="modern"] .matchdb-table tbody tr:nth-child(even) {
+  background: #ffffff !important;
+}
+[data-style="modern"] .matchdb-table tbody tr:hover,
+[data-style="modern"] .matchdb-table tbody tr:hover td {
+  background: #f0f7ff !important;
+}
+
+[data-style="modern"] .matchdb-footnote {
+  background: #fafafa !important;
+  border-top: 1px solid #e9ebed !important;
+  color: #545b64 !important;
+  font-size: 12px;
+  padding: 6px 12px !important;
+}
+[data-style="modern"] .matchdb-empty {
+  color: #545b64 !important;
+  font-size: 14px;
+  padding: 24px !important;
+}
+[data-style="modern"] .matchdb-selection-bar {
+  background: #f0f7ff !important;
+  border: 1px solid #0073bb !important;
+  border-radius: 8px !important;
+  color: #0073bb !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   7. STAT CARDS  (.matchdb-stat-rect)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .matchdb-stat-rect {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  padding: 4px 10px !important;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+[data-style="modern"] .matchdb-stat-rect:hover {
+  background: #ffffff !important;
+  border-color: #0073bb !important;
+  box-shadow: 0 0 0 1px #0073bb !important;
+}
+[data-style="modern"] .matchdb-stat-rect-active {
+  background: #ffffff !important;
+  border-color: #0073bb !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(0, 115, 187, 0.25) !important;
+}
+[data-style="modern"] .matchdb-stat-value {
+  color: #16191f !important;
+  font-size: 15px !important;
+  font-weight: 700;
+}
+[data-style="modern"] .matchdb-stat-label {
+  color: #545b64 !important;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   8. PROGRESS METER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .matchdb-meter-track {
+  border: 1px solid #e9ebed !important;
+  border-radius: 4px !important;
+  background: #f2f3f3 !important;
+  height: 6px;
+}
+[data-style="modern"] .matchdb-meter-fill {
+  background: #0073bb !important;
+  border-radius: 4px !important;
+}
+[data-style="modern"] .matchdb-meter-fill-high {
+  background: #1d8102 !important;
+}
+[data-style="modern"] .matchdb-meter-fill-mid {
+  background: #ff9900 !important;
+}
+[data-style="modern"] .matchdb-meter-fill-low {
+  background: #d13212 !important;
+}
+[data-style="modern"] .matchdb-meter-label {
+  color: #16191f !important;
+  font-size: 13px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   9. BADGES, TYPE PILLS, SKILL TAGS & CHIPS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Job type pills (C2C, W2, etc.) */
+[data-style="modern"] .matchdb-type-pill {
+  background: #f2f3f3 !important;
+  border: 1px solid #d5dbdb !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 2px 10px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: auto !important;
+}
+
+/* Public jobs type badge */
+[data-style="modern"] .pub-type-badge {
+  background: #f2f3f3 !important;
+  border: 1px solid #d5dbdb !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  font-weight: 600;
+  font-size: 11px;
+  width: auto !important;
+}
+[data-style="modern"] .pub-filter-badge {
+  background: #ff9900 !important;
+  color: #16191f !important;
+  border-radius: 8px !important;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Skill tags — pill style */
+[data-style="modern"] .rm-skill-tag,
+[data-style="modern"] .pub-skill-tag,
+[data-style="modern"] .detail-tag,
+[data-style="modern"] .legacy-tag,
+[data-style="modern"] .legacy-tag-readonly,
+[data-style="modern"] .pjp-chip {
+  background: #f0f7ff !important;
+  border: 1px solid #aab7b8 !important;
+  border-radius: 12px !important;
+  color: #0073bb !important;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 2px 10px !important;
+}
+[data-style="modern"] .legacy-tag-remove {
+  background: transparent !important;
+  border: none !important;
+  color: #545b64 !important;
+  border-radius: 50% !important;
+}
+[data-style="modern"] .legacy-tag-remove:hover {
+  background: #e9ebed !important;
+  color: #b30000 !important;
+}
+
+/* Vendor active/closed status */
+[data-style="modern"] .vdp-status-active {
+  color: #1d8102 !important;
+  border-color: #1d8102 transparent transparent #1d8102 !important;
+}
+[data-style="modern"] .vdp-status-closed {
+  color: #d13212 !important;
+  border-color: #d13212 transparent transparent #d13212 !important;
+}
+
+/* Job posting modal badges */
+[data-style="modern"] .jpm-badge {
+  border-radius: 8px !important;
+  font-size: 11px;
+  padding: 3px 10px !important;
+}
+[data-style="modern"] .jpm-badge-active {
+  background: #f0fff4 !important;
+  color: #1d8102 !important;
+  border: 1px solid #1d8102 !important;
+}
+[data-style="modern"] .jpm-badge-closed {
+  background: #fdf0ed !important;
+  color: #d13212 !important;
+  border: 1px solid #d13212 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   10. ALERTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .matchdb-alert {
+  background: #f0f7ff !important;
+  border: 1px solid #0073bb !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  padding: 10px 16px !important;
+}
+[data-style="modern"] .matchdb-alert-success {
+  background: #f0fff4 !important;
+  border-color: #037f0c !important;
+  color: #037f0c !important;
+}
+[data-style="modern"] .matchdb-alert-error {
+  background: #fdf0ed !important;
+  border-color: #d13212 !important;
+  color: #d13212 !important;
+}
+[data-style="modern"] .legacy-alert {
+  background: #f0f7ff !important;
+  border: 1px solid #0073bb !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+}
+[data-style="modern"] .legacy-alert-error {
+  background: #fdf0ed !important;
+  border-color: #d13212 !important;
+  color: #d13212 !important;
+}
+[data-style="modern"] .legacy-alert-success {
+  background: #f0fff4 !important;
+  border-color: #037f0c !important;
+  color: #037f0c !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   11. DETAIL MODAL
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .detail-modal-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+[data-style="modern"] .detail-modal {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18) !important;
+}
+[data-style="modern"] .detail-modal-titlebar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e9ebed !important;
+  border-radius: 8px 8px 0 0;
+  color: #16191f !important;
+  font-size: 16px;
+  font-weight: 700;
+  text-shadow: none !important;
+  padding: 14px 20px !important;
+}
+[data-style="modern"] .detail-modal-titlebar * {
+  text-shadow: none !important;
+}
+[data-style="modern"] .detail-modal-body {
+  border: none !important;
+  padding: 20px !important;
+  background: #ffffff !important;
+}
+[data-style="modern"] .detail-section h3 {
+  color: #0073bb !important;
+  border-bottom: 1px solid #e9ebed !important;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-bottom: 6px;
+}
+[data-style="modern"] .detail-modal-match.high {
+  background: #1d8102 !important;
+  border-radius: 4px;
+}
+[data-style="modern"] .detail-modal-match.mid {
+  background: #ff9900 !important;
+  border-radius: 4px;
+}
+[data-style="modern"] .detail-modal-match.low {
+  background: #d13212 !important;
+  border-radius: 4px;
+}
+
+[data-style="modern"] .detail-btn-pdf {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .detail-btn-send {
+  background: #037f0c !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   12. RESUME MODAL
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .rm-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+[data-style="modern"] .rm-window {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18) !important;
+}
+[data-style="modern"] .rm-titlebar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e9ebed !important;
+  border-radius: 8px 8px 0 0;
+  color: #16191f !important;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: none !important;
+  padding: 14px 20px !important;
+}
+[data-style="modern"] .rm-input {
+  height: 32px !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  font-size: 14px !important;
+  padding: 4px 10px !important;
+}
+[data-style="modern"] .rm-input:focus {
+  border-color: #0073bb !important;
+  outline: 2px solid rgba(0, 115, 187, 0.2) !important;
+}
+[data-style="modern"] .rm-btn {
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  font-size: 14px;
+  font-weight: 400;
+  height: 32px !important;
+  padding: 0 16px !important;
+}
+[data-style="modern"] .rm-btn:hover {
+  background: #f2f3f3 !important;
+  border-color: #0073bb !important;
+}
+[data-style="modern"] .rm-fieldset {
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .rm-alert-error {
+  background: #fdf0ed !important;
+  border: 1px solid #d13212 !important;
+  border-radius: 8px !important;
+  color: #d13212 !important;
+}
+[data-style="modern"] .rm-alert-success {
+  background: #f0fff4 !important;
+  border: 1px solid #037f0c !important;
+  border-radius: 8px !important;
+  color: #037f0c !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   13. JOB POSTING MODAL
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .jpm-window {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18) !important;
+}
+[data-style="modern"] .jpm-confirm-bar {
+  background: #fffae6 !important;
+  border-bottom: 1px solid #ff9900 !important;
+  padding: 10px 16px !important;
+  font-size: 13px;
+}
+[data-style="modern"] .jpm-btn-danger {
+  background: #fdf0ed !important;
+  border: 1px solid #d13212 !important;
+  border-radius: 8px !important;
+  color: #d13212 !important;
+}
+[data-style="modern"] .jpm-btn-danger:hover:not(:disabled) {
+  background: #d13212 !important;
+  color: #ffffff !important;
+}
+[data-style="modern"] .jpm-btn-reopen {
+  background: #f0fff4 !important;
+  border: 1px solid #037f0c !important;
+  border-radius: 8px !important;
+  color: #037f0c !important;
+}
+[data-style="modern"] .jpm-btn-reopen:hover:not(:disabled) {
+  background: #037f0c !important;
+  color: #ffffff !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   14. POST JOB PAGE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .pjp-body {
+  background: #f2f3f3 !important;
+}
+[data-style="modern"] .pjp-paste-panel {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .pjp-paste-area {
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #16191f !important;
+}
+[data-style="modern"] .pjp-paste-area:focus {
+  border-color: #0073bb !important;
+  outline: 2px solid rgba(0, 115, 187, 0.2) !important;
+}
+[data-style="modern"] .pjp-parse-btn {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .pjp-parse-btn:hover {
+  background: #005d96 !important;
+}
+[data-style="modern"] .pjp-parse-summary {
+  background: #f0fff4 !important;
+  border: 1px solid #037f0c !important;
+  border-radius: 8px !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   15. LEGACY FORMS  (CandidateProfile / PostJob forms)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .legacy-form-page {
+  background: #f2f3f3 !important;
+}
+[data-style="modern"] .legacy-form-shell {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08) !important;
+}
+[data-style="modern"] .legacy-form-titlebar {
+  background: #232f3e !important;
+  border-radius: 8px 8px 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  text-shadow: none !important;
+  padding: 12px 20px !important;
+}
+[data-style="modern"] .legacy-fieldset {
+  border: 1px solid #e9ebed !important;
+  border-radius: 6px !important;
+  padding: 12px 16px !important;
+}
+[data-style="modern"] .legacy-fieldset legend {
+  color: #545b64 !important;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 6px !important;
+}
+
+/* All form inputs */
+[data-style="modern"] .legacy-row input,
+[data-style="modern"] .legacy-row select,
+[data-style="modern"] .legacy-row textarea,
+[data-style="modern"] .rm-input,
+[data-style="modern"] .pjp-desc-area {
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #16191f !important;
+  font-size: 14px;
+  padding: 6px 10px !important;
+  height: auto;
+  min-height: 32px;
+}
+[data-style="modern"] .legacy-row input:focus,
+[data-style="modern"] .legacy-row select:focus,
+[data-style="modern"] .legacy-row textarea:focus,
+[data-style="modern"] .pjp-desc-area:focus {
+  border-color: #0073bb !important;
+  outline: 2px solid rgba(0, 115, 187, 0.2) !important;
+  outline-offset: 0 !important;
+}
+
+[data-style="modern"] .legacy-btn {
+  height: 32px;
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 16px !important;
+}
+[data-style="modern"] .legacy-btn:hover {
+  background: #f2f3f3 !important;
+  border-color: #0073bb !important;
+}
+[data-style="modern"] .legacy-btn-primary {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border-color: #0073bb !important;
+}
+[data-style="modern"] .legacy-btn-primary:hover {
+  background: #005d96 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   16. PUBLIC JOBS VIEW
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .pub-section {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+[data-style="modern"] .pub-section-titlebar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e9ebed !important;
+  color: #16191f !important;
+  font-weight: 700;
+  text-shadow: none !important;
+  padding: 12px 16px !important;
+}
+[data-style="modern"] .pub-signup-banner {
+  background: #232f3e !important;
+  border-bottom: 1px solid #131a22 !important;
+  border-radius: 8px 8px 0 0;
+}
+[data-style="modern"] .pub-btn {
+  background: #ffffff !important;
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  color: #16191f !important;
+  height: 32px;
+}
+[data-style="modern"] .pub-btn:hover {
+  background: #f2f3f3 !important;
+  border-color: #0073bb !important;
+}
+
+[data-style="modern"] .pub-fit-track {
+  border: 1px solid #e9ebed !important;
+  border-radius: 4px !important;
+  background: #f2f3f3 !important;
+  overflow: hidden;
+}
+[data-style="modern"] .pub-fit-fill {
+  border-radius: 4px !important;
+}
+[data-style="modern"] .pub-fit-fill.pub-fit-high,
+[data-style="modern"] .pub-fit-fill.pub-fit-good {
+  background: #1d8102 !important;
+}
+
+[data-style="modern"] .pub-statusbar {
+  background: #f2f3f3 !important;
+  border-top: 1px solid #e9ebed !important;
+  color: #545b64 !important;
+}
+[data-style="modern"] .pub-poll-live {
+  color: #1d8102 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   17. MEMBERSHIP GATE PAGE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .mg-landing {
+  background: #f2f3f3 !important;
+}
+[data-style="modern"] .mg-window {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+[data-style="modern"] .mg-titlebar {
+  background: #232f3e !important;
+  border-radius: 8px 8px 0 0;
+  text-shadow: none !important;
+  padding: 14px 20px !important;
+}
+[data-style="modern"] .mg-pkg-card {
+  background: #ffffff !important;
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  padding: 16px !important;
+}
+[data-style="modern"] .mg-pkg-highlighted {
+  background: #f0f7ff !important;
+  border: 2px solid #0073bb !important;
+  box-shadow: 0 4px 12px rgba(0, 115, 187, 0.15) !important;
+}
+[data-style="modern"] .mg-pkg-badge {
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 2px 10px !important;
+}
+[data-style="modern"] .mg-cta-btn {
+  background: #ff9900 !important;
+  color: #16191f !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 700;
+}
+[data-style="modern"] .mg-cta-btn:hover {
+  background: #e68a00 !important;
+}
+[data-style="modern"] .mg-callout {
+  background: #fffae6 !important;
+  border: 1px solid #ff9900 !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .mg-statusbar {
+  background: #f2f3f3 !important;
+  border-top: 1px solid #e9ebed !important;
+  color: #545b64 !important;
+}
+[data-style="modern"] .mg-feature-table th {
+  background: #f2f3f3 !important;
+  border: 1px solid #e9ebed !important;
+  font-weight: 700;
+}
+[data-style="modern"] .mg-feature-table td {
+  border: 1px solid #e9ebed !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   18. GENERIC HTML INPUTS (catch-all for any un-classed inputs inside modern)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] input:not(.p-inputtext):not([class*="p-"]),
+[data-style="modern"] select:not([class*="p-"]),
+[data-style="modern"] textarea:not([class*="p-"]) {
+  border: 1px solid #879596 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #16191f !important;
+}
+[data-style="modern"] input:not(.p-inputtext):not([class*="p-"]):focus,
+[data-style="modern"] select:not([class*="p-"]):focus,
+[data-style="modern"] textarea:not([class*="p-"]):focus {
+  border-color: #0073bb !important;
+  outline: 2px solid rgba(0, 115, 187, 0.2) !important;
+  outline-offset: 0 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   19. MUI COMPONENT OVERRIDES (PricingPage, dialogs rendered via MUI)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-style="modern"] .MuiButton-containedPrimary {
+  background-color: #0073bb !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+[data-style="modern"] .MuiButton-containedPrimary:hover {
+  background-color: #005d96 !important;
+  box-shadow: none !important;
+}
+[data-style="modern"] .MuiButton-outlinedPrimary {
+  border-color: #0073bb !important;
+  color: #0073bb !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .MuiPaper-root {
+  border-radius: 8px !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) !important;
+}
+[data-style="modern"] .MuiCard-root {
+  border: 1px solid #e9ebed !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .MuiChip-root {
+  border-radius: 8px !important;
+}
+[data-style="modern"] .MuiChip-filled {
+  background: #f0f7ff !important;
+  color: #0073bb !important;
+  border: 1px solid #aab7b8 !important;
+}
+[data-style="modern"] .MuiOutlinedInput-notchedOutline {
+  border-color: #879596 !important;
+  border-radius: 8px !important;
+}
+[data-style="modern"] .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #0073bb !important;
+}

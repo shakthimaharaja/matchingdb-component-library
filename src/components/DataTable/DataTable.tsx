@@ -293,7 +293,7 @@ function DataTable<T>({
   titleIcon,
   titleExtra,
   showRowNumbers = true,
-  rnColWidth = "3%",
+  rnColWidth = "28px",
   flashIds,
   deleteFlashIds,
   rowCount,
@@ -375,6 +375,9 @@ function DataTable<T>({
       ? Math.max(0, currentPageSize - pageRows.length)
       : 0;
 
+  // ── Target visible row count (for skeleton + filler consistency) ──
+  const targetRowCount = rowCount ?? currentPageSize;
+
   // ── Total columns (including optional row-number col) ──
   const totalCols = columns.length + (showRowNumbers ? 1 : 0);
 
@@ -440,7 +443,7 @@ function DataTable<T>({
         {loading ? (
           <table className="matchdb-table" aria-busy="true">
             <tbody>
-              {Array.from({ length: 8 }).map((_, ri) => (
+              {Array.from({ length: targetRowCount }).map((_, ri) => (
                 <tr
                   key={`sk-${ri}`}
                   className="matchdb-skeleton-row"
@@ -564,9 +567,15 @@ function DataTable<T>({
                     aria-hidden="true"
                     className="matchdb-filler-row"
                   >
-                    {showRowNumbers && <td className="pub-td-rn" />}
+                    {showRowNumbers && (
+                      <td className="pub-td-rn">
+                        {safePage * currentPageSize + pageRows.length + i + 1}
+                      </td>
+                    )}
                     {columns.map((col) => (
-                      <td key={col.key} className={col.className} />
+                      <td key={col.key} className={col.className}>
+                        &nbsp;
+                      </td>
                     ))}
                   </tr>
                 ))}
