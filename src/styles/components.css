@@ -73,6 +73,19 @@
   font-weight: 800;
   color: var(--w97-navy, #235a81);
 }
+.matchdb-tab-badge {
+  margin-left: 4px;
+  background: var(--w97-sky, #f0f0f0);
+  color: var(--w97-text-secondary, #555);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+}
+.matchdb-tab-active .matchdb-tab-badge {
+  background: #e8f0fe;
+  color: var(--w97-navy, #235a81);
+}
 
 /* ===== LABELS ===== */
 .matchdb-label {

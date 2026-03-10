@@ -625,6 +625,12 @@
   border-bottom-color: #2a3a4e !important;
   color: #d5dbdb !important;
 }
+[data-style="modern"][data-theme="dark"] .pub-section-title,
+[data-style="modern"] .legacy-shell-root.dark .pub-section-title {
+  color: #d5dbdb !important;
+  text-shadow: none !important;
+  font-family: inherit !important;
+}
 [data-style="modern"][data-theme="dark"] .pub-statusbar,
 [data-style="modern"] .legacy-shell-root.dark .pub-statusbar {
   background: #161e2d !important;
@@ -1460,6 +1466,14 @@
   text-shadow: none !important;
   padding: 12px 16px !important;
 }
+[data-style="modern"] .pub-section-title {
+  color: #16191f !important;
+  text-shadow: none !important;
+  font-family: inherit !important;
+}
+[data-style="modern"] .pub-join-badge {
+  font-family: inherit !important;
+}
 [data-style="modern"] .pub-signup-banner {
   background: #232f3e !important;
   border-bottom: 1px solid #131a22 !important;
@@ -1626,4 +1640,318 @@
 }
 [data-style="modern"] .Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #0073bb !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PROJECT FINANCIALS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Card ── */
+[data-style="modern"] .pf-card {
+  background: #ffffff;
+  border: 1px solid #e9ebed;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+[data-style="modern"] .pf-card-editing {
+  border-color: #0073bb;
+  box-shadow: 0 0 0 1px #0073bb, 0 2px 8px rgba(0, 115, 187, 0.12);
+}
+
+/* ── Card Header ── */
+[data-style="modern"] .pf-card-header {
+  background: #fafafa;
+  border-bottom: 1px solid #e9ebed;
+  color: #16191f;
+  padding: 10px 16px;
+  border-radius: 8px 8px 0 0;
+}
+[data-style="modern"] .pf-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #16191f;
+}
+[data-style="modern"] .pf-card-icon {
+  color: #545b64;
+}
+[data-style="modern"] .pf-status-badge {
+  border-radius: 10px;
+  font-size: 10px;
+  padding: 2px 10px;
+  font-weight: 600;
+}
+[data-style="modern"] .pf-status-active {
+  background: #e6f4ea;
+  color: #1d8102;
+}
+[data-style="modern"] .pf-status-closed {
+  background: #f2f3f3;
+  color: #545b64;
+}
+
+/* ── Buttons ── */
+[data-style="modern"] .pf-edit-btn {
+  font-size: 11px !important;
+  padding: 4px 14px !important;
+  background: #ffffff !important;
+  color: #0073bb !important;
+  border: 1px solid #0073bb !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  font-weight: 600 !important;
+}
+[data-style="modern"] .pf-edit-btn:hover {
+  background: #f0f7ff !important;
+}
+[data-style="modern"] .pf-save-btn {
+  font-size: 11px !important;
+  padding: 4px 14px !important;
+  background: #0073bb !important;
+  color: #ffffff !important;
+  border: 1px solid #0073bb !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  font-weight: 600 !important;
+}
+[data-style="modern"] .pf-save-btn:hover {
+  background: #005d96 !important;
+}
+
+/* ── Metrics Row ── */
+[data-style="modern"] .pf-metrics-row {
+  border-bottom: 1px solid #e9ebed;
+}
+[data-style="modern"] .pf-metrics-preview {
+  background: #fafafa;
+}
+[data-style="modern"] .pf-metric {
+  border-right: 1px solid #e9ebed;
+  padding: 12px 14px;
+}
+[data-style="modern"] .pf-metric:last-child {
+  border-right: none;
+}
+[data-style="modern"] .pf-metric-label {
+  font-size: 10px;
+  color: #545b64;
+  letter-spacing: 0.4px;
+}
+[data-style="modern"] .pf-metric-value {
+  font-size: 15px;
+  font-weight: 700;
+}
+[data-style="modern"] .pf-metric-billed {
+  color: #0073bb;
+}
+[data-style="modern"] .pf-metric-pay {
+  color: #0073bb;
+}
+[data-style="modern"] .pf-metric-tax {
+  color: #d13212;
+}
+[data-style="modern"] .pf-metric-cash {
+  color: #ff9900;
+}
+[data-style="modern"] .pf-metric-net {
+  color: #1d8102;
+}
+[data-style="modern"] .pf-metric-paid {
+  color: #1d8102;
+}
+[data-style="modern"] .pf-metric-pending-pos {
+  color: #ff9900;
+}
+[data-style="modern"] .pf-metric-pending-neg {
+  color: #1d8102;
+}
+
+/* ── Detail Grid ── */
+[data-style="modern"] .pf-detail-grid {
+  padding: 14px 16px;
+  gap: 10px 20px;
+  font-size: 12px;
+}
+[data-style="modern"] .pf-detail-label {
+  font-size: 10px;
+  color: #545b64;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+[data-style="modern"] .pf-detail-value {
+  color: #16191f;
+  font-weight: 500;
+}
+
+/* ── Form Grid ── */
+[data-style="modern"] .pf-form-grid {
+  padding: 14px 16px;
+}
+[data-style="modern"] .pf-form-label {
+  font-size: 11px;
+  color: #545b64;
+  font-weight: 500;
+}
+[data-style="modern"] .pf-tax-hint {
+  background: #fde8e0;
+  color: #d13212;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+[data-style="modern"] .pf-form-input {
+  border: 1px solid #aab7b8 !important;
+  border-radius: 4px !important;
+  padding: 6px 10px !important;
+  font-size: 12px !important;
+  background: #ffffff !important;
+  color: #16191f !important;
+}
+[data-style="modern"] .pf-form-input:focus {
+  border-color: #0073bb !important;
+  box-shadow: 0 0 0 1px #0073bb !important;
+}
+[data-style="modern"] .pf-form-textarea {
+  border: 1px solid #aab7b8 !important;
+  border-radius: 4px !important;
+  padding: 6px 10px !important;
+  font-size: 12px !important;
+  background: #ffffff !important;
+  color: #16191f !important;
+}
+[data-style="modern"] .pf-form-textarea:focus {
+  border-color: #0073bb !important;
+  box-shadow: 0 0 0 1px #0073bb !important;
+}
+
+/* ── Context Bar ── */
+[data-style="modern"] .pf-context-bar {
+  background: #fafafa;
+  border-top: 1px solid #e9ebed;
+  color: #545b64;
+  font-size: 11px;
+  padding: 8px 16px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* ─── PROJECT FINANCIALS — DARK MODE ─── */
+
+[data-style="modern"][data-theme="dark"] .pf-card {
+  background: #1a2332;
+  border-color: #3d5166;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+[data-style="modern"][data-theme="dark"] .pf-card-editing {
+  border-color: #4da6e8;
+  box-shadow: 0 0 0 1px #4da6e8, 0 2px 8px rgba(77, 166, 232, 0.15);
+}
+[data-style="modern"][data-theme="dark"] .pf-card-header {
+  background: #243447;
+  border-bottom-color: #3d5166;
+  color: #d9d9d9;
+}
+[data-style="modern"][data-theme="dark"] .pf-card-title {
+  color: #d9d9d9;
+}
+[data-style="modern"][data-theme="dark"] .pf-card-icon {
+  color: #aab7b8;
+}
+[data-style="modern"][data-theme="dark"] .pf-status-active {
+  background: #1a3a1a;
+  color: #4caf50;
+}
+[data-style="modern"][data-theme="dark"] .pf-status-closed {
+  background: #243447;
+  color: #aab7b8;
+}
+[data-style="modern"][data-theme="dark"] .pf-edit-btn {
+  background: #1a2332 !important;
+  color: #4da6e8 !important;
+  border-color: #4da6e8 !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-edit-btn:hover {
+  background: #243447 !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-save-btn {
+  background: #4da6e8 !important;
+  color: #0f1b2d !important;
+  border-color: #4da6e8 !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-save-btn:hover {
+  background: #6bb8ed !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-metrics-row {
+  border-bottom-color: #3d5166;
+}
+[data-style="modern"][data-theme="dark"] .pf-metrics-preview {
+  background: #243447;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric {
+  border-right-color: #3d5166;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-label {
+  color: #aab7b8;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-billed {
+  color: #4da6e8;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-pay {
+  color: #4da6e8;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-tax {
+  color: #ff7961;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-cash {
+  color: #ffb74d;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-net {
+  color: #66bb6a;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-paid {
+  color: #66bb6a;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-pending-pos {
+  color: #ffb74d;
+}
+[data-style="modern"][data-theme="dark"] .pf-metric-pending-neg {
+  color: #66bb6a;
+}
+[data-style="modern"][data-theme="dark"] .pf-detail-grid {
+  color: #d9d9d9;
+}
+[data-style="modern"][data-theme="dark"] .pf-detail-label {
+  color: #aab7b8;
+}
+[data-style="modern"][data-theme="dark"] .pf-detail-value {
+  color: #d9d9d9;
+}
+[data-style="modern"][data-theme="dark"] .pf-form-label {
+  color: #aab7b8;
+}
+[data-style="modern"][data-theme="dark"] .pf-tax-hint {
+  background: #3a1a1a;
+  color: #ff7961;
+}
+[data-style="modern"][data-theme="dark"] .pf-form-input {
+  background: #1a2332 !important;
+  border-color: #3d5166 !important;
+  color: #d9d9d9 !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-form-input:focus {
+  border-color: #4da6e8 !important;
+  box-shadow: 0 0 0 1px #4da6e8 !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-form-textarea {
+  background: #1a2332 !important;
+  border-color: #3d5166 !important;
+  color: #d9d9d9 !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-form-textarea:focus {
+  border-color: #4da6e8 !important;
+  box-shadow: 0 0 0 1px #4da6e8 !important;
+}
+[data-style="modern"][data-theme="dark"] .pf-context-bar {
+  background: #243447;
+  border-top-color: #3d5166;
+  color: #aab7b8;
 }

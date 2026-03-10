@@ -441,3 +441,266 @@ textarea:focus-visible {
     max-height: 95vh;
   }
 }
+
+/* =============================================================================
+   PROJECT FINANCIALS — Legacy (Win97) Base Styles
+   ============================================================================= */
+
+.pf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pf-card {
+  background: var(--w97-window, #ffffff);
+  border: 2px solid var(--w97-btn-shadow, #808080);
+  border-radius: 0;
+  box-shadow: inset -1px -1px 0 var(--w97-btn-dark, #404040),
+    inset 1px 1px 0 var(--w97-btn-highlight, #ffffff);
+  overflow: hidden;
+}
+
+.pf-card-editing {
+  border-color: var(--w97-navy, #000080);
+}
+
+.pf-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: linear-gradient(
+    180deg,
+    var(--w97-titlebar-from, #000080),
+    var(--w97-titlebar-to, #1084d0)
+  );
+  color: var(--w97-titlebar-text, #ffffff);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pf-card-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pf-card-icon {
+  font-size: 14px;
+}
+
+.pf-status-badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 2px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pf-status-active {
+  background: #c8e6c9;
+  color: #2e7d32;
+}
+
+.pf-status-closed {
+  background: #f5f5f5;
+  color: #888;
+}
+
+.pf-edit-btn {
+  font-size: 10px !important;
+  padding: 2px 10px !important;
+  background: var(--w97-btn-face, #c0c0c0) !important;
+  color: var(--w97-text, #000) !important;
+}
+
+.pf-save-btn {
+  font-size: 10px !important;
+  padding: 3px 12px !important;
+  background: var(--w97-navy, #000080) !important;
+  color: #fff !important;
+  border-color: var(--w97-navy, #000080) !important;
+}
+
+/* ── Metrics Row ── */
+
+.pf-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--w97-border-light, #dfdfdf);
+}
+
+.pf-metrics-preview {
+  background: var(--w97-window-alt, #f0f0f0);
+}
+
+.pf-metric {
+  flex: 1 1 0;
+  min-width: 90px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid var(--w97-border-light, #dfdfdf);
+}
+
+.pf-metric:last-child {
+  border-right: none;
+}
+
+.pf-metric-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--w97-text-secondary, #666);
+  margin-bottom: 4px;
+}
+
+.pf-metric-value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pf-metric-billed {
+  color: #1565c0;
+}
+
+.pf-metric-pay {
+  color: #0073bb;
+}
+
+.pf-metric-tax {
+  color: #c62828;
+}
+
+.pf-metric-cash {
+  color: #e65100;
+}
+
+.pf-metric-net {
+  color: #2e7d32;
+}
+
+.pf-metric-paid {
+  color: #1d8102;
+}
+
+.pf-metric-pending-pos {
+  color: #b8860b;
+}
+
+.pf-metric-pending-neg {
+  color: #2e7d32;
+}
+
+/* ── Detail Grid (read-only) ── */
+
+.pf-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px 16px;
+  padding: 12px;
+  font-size: 11px;
+}
+
+.pf-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pf-detail-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--w97-text-secondary, #888);
+}
+
+.pf-detail-value {
+  font-weight: 500;
+  color: var(--w97-text, #333);
+}
+
+/* ── Form Grid (editing) ── */
+
+.pf-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px 14px;
+  padding: 12px;
+}
+
+.pf-form-full {
+  grid-column: 1 / -1;
+}
+
+.pf-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pf-form-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--w97-text-secondary, #555);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pf-tax-hint {
+  font-size: 9px;
+  color: #c62828;
+  font-weight: 700;
+  background: #ffebee;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.pf-form-input {
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+}
+
+.pf-form-textarea {
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  resize: vertical;
+  width: 100%;
+}
+
+/* ── Context Bar ── */
+
+.pf-context-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--w97-window-alt, #f5f5f5);
+  border-top: 1px solid var(--w97-border-light, #dfdfdf);
+  font-size: 10px;
+  color: var(--w97-text-secondary, #888);
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 700px) {
+  .pf-metrics-row {
+    flex-wrap: wrap;
+  }
+  .pf-metric {
+    min-width: 80px;
+    flex: 1 1 33%;
+  }
+  .pf-detail-grid,
+  .pf-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

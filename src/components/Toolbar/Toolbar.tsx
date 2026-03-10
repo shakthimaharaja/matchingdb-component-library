@@ -9,6 +9,7 @@ export interface ToolbarProps {
   /** Content aligned right */
   right?: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   children?: React.ReactNode;
 }
 
@@ -16,11 +17,12 @@ const Toolbar: React.FC<ToolbarProps> = ({
   left,
   right,
   className,
+  style,
   children,
 }) => {
   const cls = ["matchdb-toolbar", className].filter(Boolean).join(" ");
   return (
-    <div className={cls}>
+    <div className={cls} style={style}>
       {left && <div className="matchdb-toolbar-left">{left}</div>}
       {children}
       {right && <div className="matchdb-toolbar-right">{right}</div>}
