@@ -505,6 +505,17 @@
   border-top: 1px solid var(--w97-btn-shadow, #808080);
   border-left: 1px solid var(--w97-btn-shadow, #808080);
 }
+
+/* Auto-height modifier: no scroll, show all rows */
+.matchdb-panel.matchdb-auto-height {
+  overflow: visible;
+  flex: none;
+}
+.matchdb-panel.matchdb-auto-height .matchdb-table-wrap {
+  height: auto;
+  flex: none;
+  overflow: visible;
+}
 .matchdb-table-wrap::-webkit-scrollbar {
   width: 16px;
   height: 16px;

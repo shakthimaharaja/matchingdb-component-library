@@ -128,6 +128,9 @@ export interface DataTableProps<T = unknown> {
 
   /** Extra content rendered on the right side of the pagination bar (e.g. download buttons) */
   paginationExtra?: React.ReactNode;
+
+  /** Optional footer row(s) rendered inside <tfoot>. Provide <tr>…</tr> JSX. */
+  footerRow?: React.ReactNode;
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -313,6 +316,7 @@ function DataTable<T>({
   onRowDoubleClick,
   className,
   paginationExtra,
+  footerRow,
 }: DataTableProps<T>): React.ReactElement {
   // ── Pagination state ──
   const isServerSide = serverTotal !== undefined && onPageChange !== undefined;
@@ -580,6 +584,7 @@ function DataTable<T>({
                   </tr>
                 ))}
             </tbody>
+            {footerRow && <tfoot>{footerRow}</tfoot>}
           </table>
         )}
       </div>
