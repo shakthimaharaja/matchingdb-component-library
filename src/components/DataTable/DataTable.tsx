@@ -295,7 +295,7 @@ function DataTable<T>({
   titleIcon,
   titleExtra,
   showRowNumbers = true,
-  rnColWidth = "28px",
+  rnColWidth = "20px",
   flashIds,
   deleteFlashIds,
   rowCount,
