@@ -859,7 +859,8 @@
   background: #ffffff !important;
   border: 1px solid #e9ebed !important;
   border-radius: 8px !important;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 [data-style="modern"] .matchdb-panel {
   background: #ffffff !important;

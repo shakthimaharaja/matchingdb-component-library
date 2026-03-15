@@ -80,7 +80,7 @@ export interface DataTableProps<T = unknown> {
   // ── Row numbers ──
   /** Show automatic row-number (#) column. Default true. */
   showRowNumbers?: boolean;
-  /** CSS width for the row-number column. Default "3%" */
+  /** CSS width for the row-number column. Default "1%" */
   rnColWidth?: string;
 
   // ── Flash animation ──
@@ -295,7 +295,7 @@ function DataTable<T>({
   titleIcon,
   titleExtra,
   showRowNumbers = true,
-  rnColWidth = "20px",
+  rnColWidth = "1%",
   flashIds,
   deleteFlashIds,
   rowCount,
@@ -342,12 +342,15 @@ function DataTable<T>({
     if (pageResetKey !== undefined) setPage(0);
   }, [pageResetKey]);
 
-  const totalRecords = isServerSide ? (serverTotal ?? 0) : data.length;
+  const totalRecords = isServerSide ? serverTotal ?? 0 : data.length;
   const totalPages = Math.max(1, Math.ceil(totalRecords / currentPageSize));
   const safePage = Math.min(page, totalPages - 1);
   let pageRows: T[];
   if (isPaginated && !isServerSide) {
-    pageRows = data.slice(safePage * currentPageSize, (safePage + 1) * currentPageSize);
+    pageRows = data.slice(
+      safePage * currentPageSize,
+      (safePage + 1) * currentPageSize,
+    );
   } else {
     pageRows = data;
   }
@@ -446,26 +449,25 @@ function DataTable<T>({
         {loading ? (
           <table className="matchdb-table" aria-busy="true">
             <tbody>
-              {Array.from({ length: targetRowCount }, (_, k) => `sk-${k}`).map((skKey) => (
-                <tr
-                  key={skKey}
-                  className="matchdb-skeleton-row"
-                >
-                  {showRowNumbers && (
-                    <td>
-                      <span className="w97-shimmer" style={{ width: 22 }} />
-                    </td>
-                  )}
-                  {columns.map((c) => (
-                    <td key={c.key}>
-                      <span
-                        className="w97-shimmer"
-                        style={{ width: c.skeletonWidth ?? 60 }}
-                      />
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              {Array.from({ length: targetRowCount }, (_, k) => `sk-${k}`).map(
+                (skKey) => (
+                  <tr key={skKey} className="matchdb-skeleton-row">
+                    {showRowNumbers && (
+                      <td>
+                        <span className="w97-shimmer" style={{ width: 22 }} />
+                      </td>
+                    )}
+                    {columns.map((c) => (
+                      <td key={c.key}>
+                        <span
+                          className="w97-shimmer"
+                          style={{ width: c.skeletonWidth ?? 60 }}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                ),
+              )}
             </tbody>
           </table>
         ) : (
@@ -565,14 +567,9 @@ function DataTable<T>({
                   key: `filler-${safePage}-${k}`,
                   rowNum: safePage * currentPageSize + pageRows.length + k + 1,
                 })).map((filler) => (
-                  <tr
-                    key={filler.key}
-                    className="matchdb-filler-row"
-                  >
+                  <tr key={filler.key} className="matchdb-filler-row">
                     {showRowNumbers && (
-                      <td className="pub-td-rn">
-                        {filler.rowNum}
-                      </td>
+                      <td className="pub-td-rn">{filler.rowNum}</td>
                     )}
                     {columns.map((col) => (
                       <td key={col.key} className={col.className}>

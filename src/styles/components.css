@@ -543,7 +543,8 @@
 /* ===== TABLE WRAP ===== */
 .matchdb-table-wrap {
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   min-width: 0;
   min-height: 0;
   height: 0;
@@ -774,9 +775,9 @@
   color: var(--w97-text-secondary, #808080) !important;
   font-weight: 500 !important;
   font-size: 10px !important;
-  width: 28px !important;
-  min-width: 28px !important;
-  max-width: 28px !important;
+  width: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
 }
 .pub-td-rn {
   text-align: right;
@@ -792,9 +793,9 @@
   white-space: nowrap;
   font-family: inherit;
   font-variant-numeric: tabular-nums;
-  width: 28px !important;
-  min-width: 28px !important;
-  max-width: 28px !important;
+  width: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
 }
 
 /* ===== EMPTY / PADDING / FILLER ROWS ===== */
