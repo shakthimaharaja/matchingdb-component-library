@@ -114,7 +114,7 @@
 }
 /* Preserve PrimeIcons font so icons render correctly */
 [data-style="modern"] .pi {
-  font-family: "primeicons" !important;
+  font-family: "primeicons", sans-serif !important;
 }
 
 [data-style="modern"] ::-webkit-scrollbar {
@@ -182,7 +182,7 @@
 [data-style="modern"] .legacy-shell-toggle.p-button:hover,
 [data-style="modern"] .legacy-shell-signout.p-button:hover,
 [data-style="modern"] .legacy-shell-darkmode.p-button:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: #2e3b4a !important;
   color: #ffffff !important;
   border-color: rgba(255, 255, 255, 0.35) !important;
 }
@@ -349,7 +349,7 @@
 [data-style="modern"] .legacy-shell-root.dark .legacy-shell-nav-item.active {
   background: #1e3a5f !important;
   border-left-color: #539fe5 !important;
-  color: #539fe5 !important;
+  color: #6db3f0 !important;
 }
 [data-style="modern"][data-theme="dark"] .legacy-shell-content,
 [data-style="modern"] .legacy-shell-root.dark .legacy-shell-content {
@@ -683,7 +683,7 @@
 [data-style="modern"][data-theme="dark"] .pjp-chip {
   background: #1e3a5f !important;
   border-color: #3d5166 !important;
-  color: #539fe5 !important;
+  color: #6db3f0 !important;
 }
 
 /* Selection bar dark */
@@ -691,7 +691,7 @@
 [data-style="modern"] .legacy-shell-root.dark .matchdb-selection-bar {
   background: #1e3a5f !important;
   border-color: #539fe5 !important;
-  color: #539fe5 !important;
+  color: #6db3f0 !important;
 }
 
 /* MUI dark */
@@ -758,7 +758,7 @@
 [data-style="modern"] .matchdb-btn-poke:disabled {
   background: #e9ebed !important;
   border-color: #aab7b8 !important;
-  color: #687078 !important;
+  color: #5a6670 !important;
   opacity: 1 !important;
   cursor: not-allowed;
 }
@@ -1683,7 +1683,7 @@
 }
 [data-style="modern"] .pf-status-active {
   background: #e6f4ea;
-  color: #1d8102;
+  color: #167000;
 }
 [data-style="modern"] .pf-status-closed {
   background: #f2f3f3;
@@ -1794,7 +1794,7 @@
 }
 [data-style="modern"] .pf-tax-hint {
   background: #fde8e0;
-  color: #d13212;
+  color: #b82a0f;
   border-radius: 4px;
   font-size: 10px;
   font-weight: 600;

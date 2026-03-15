@@ -26,11 +26,14 @@ export const fmtDate = (iso: string): string => {
 
 /** Format an array to a comma-separated string, or "—" if empty. */
 export const fmtList = (arr?: string[]) =>
-  arr && arr.length ? arr.join(", ") : "—";
+  arr?.length ? arr.join(", ") : "—";
 
 /** Format a value to a string, or "—" if empty/null/undefined. */
-export const fmtVal = (v: unknown) =>
-  v !== undefined && v !== null && v !== "" ? String(v) : "—";
+export const fmtVal = (v: unknown): string => {
+  if (v === undefined || v === null || v === "") return "—";
+  if (typeof v === "object") return JSON.stringify(v);
+  return `${v as string | number | boolean}`;
+};
 
 /** Format experience years as "N yrs". */
 export const formatExperience = (value?: number | null) =>
@@ -75,7 +78,7 @@ export function downloadBlob(
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  const match = disposition?.match(/filename="?([^"]+)"?/);
+  const match = disposition ? /filename="?([^"]+)"?/.exec(disposition) : null;
   a.download = match?.[1] || fallback;
   a.click();
   URL.revokeObjectURL(url);

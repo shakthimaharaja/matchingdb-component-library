@@ -263,22 +263,21 @@ const PaginationBar: React.FC<PaginationBarProps> = ({
 
 const PadRows: React.FC<{
   dataLen: number;
-  totalCols: number;
+  colKeys: string[];
   rowCount: number;
   showRowNumbers: boolean;
-}> = ({ dataLen, totalCols, rowCount, showRowNumbers }) => {
+}> = ({ dataLen, colKeys, rowCount, showRowNumbers }) => {
   const remaining = rowCount - dataLen;
   if (remaining <= 0) return null;
+  const padIndices = Array.from({ length: remaining }, (_, k) => dataLen + k);
   return (
     <>
-      {Array.from({ length: remaining }).map((_, i) => (
-        <tr key={`pad-${i}`} className="pub-empty-row" aria-hidden="true">
-          {showRowNumbers && <td className="pub-td-rn">{dataLen + i + 1}</td>}
-          {Array.from({ length: totalCols - (showRowNumbers ? 1 : 0) }).map(
-            (__, ci) => (
-              <td key={ci}>&nbsp;</td>
-            ),
-          )}
+      {padIndices.map((rowNum) => (
+        <tr key={`pad-${rowNum}`} className="pub-empty-row">
+          {showRowNumbers && <td className="pub-td-rn">{rowNum + 1}</td>}
+          {colKeys.map((ck) => (
+            <td key={ck}>&nbsp;</td>
+          ))}
         </tr>
       ))}
     </>
@@ -317,7 +316,7 @@ function DataTable<T>({
   className,
   paginationExtra,
   footerRow,
-}: DataTableProps<T>): React.ReactElement {
+}: Readonly<DataTableProps<T>>): React.ReactElement {
   // ── Pagination state ──
   const isServerSide = serverTotal !== undefined && onPageChange !== undefined;
   const isPaginated = paginate || isServerSide;
@@ -343,14 +342,15 @@ function DataTable<T>({
     if (pageResetKey !== undefined) setPage(0);
   }, [pageResetKey]);
 
-  const totalRecords = isServerSide ? serverTotal! : data.length;
+  const totalRecords = isServerSide ? (serverTotal ?? 0) : data.length;
   const totalPages = Math.max(1, Math.ceil(totalRecords / currentPageSize));
   const safePage = Math.min(page, totalPages - 1);
-  const pageRows = isPaginated
-    ? isServerSide
-      ? data
-      : data.slice(safePage * currentPageSize, (safePage + 1) * currentPageSize)
-    : data;
+  let pageRows: T[];
+  if (isPaginated && !isServerSide) {
+    pageRows = data.slice(safePage * currentPageSize, (safePage + 1) * currentPageSize);
+  } else {
+    pageRows = data;
+  }
 
   const startRow = safePage * currentPageSize + 1;
   const endRow = Math.min((safePage + 1) * currentPageSize, totalRecords);
@@ -359,7 +359,7 @@ function DataTable<T>({
     (p: number) => {
       const clamped = Math.max(0, Math.min(totalPages - 1, p));
       setPage(clamped);
-      if (isServerSide) onPageChange!(clamped + 1, currentPageSize);
+      if (isServerSide) onPageChange(clamped + 1, currentPageSize);
     },
     [totalPages, isServerSide, onPageChange, currentPageSize],
   );
@@ -368,7 +368,7 @@ function DataTable<T>({
     (size: number) => {
       setCurrentPageSize(size);
       setPage(0);
-      if (isServerSide) onPageChange!(1, size);
+      if (isServerSide) onPageChange(1, size);
     },
     [isServerSide, onPageChange],
   );
@@ -393,6 +393,7 @@ function DataTable<T>({
 
   // ── Render ──
   const wrapCls = ["matchdb-panel", className].filter(Boolean).join(" ");
+  const rowLabel = `${totalRecords} row${totalRecords === 1 ? "" : "s"}`;
 
   return (
     <div className={wrapCls}>
@@ -405,9 +406,7 @@ function DataTable<T>({
             )}
             {title && <span className="matchdb-panel-title-text">{title}</span>}
             <span className="matchdb-panel-title-meta">
-              {loading
-                ? "Loading..."
-                : `${totalRecords} row${totalRecords !== 1 ? "s" : ""}`}
+              {loading ? "Loading..." : rowLabel}
             </span>
             {titleExtra}
           </div>
@@ -434,8 +433,8 @@ function DataTable<T>({
               <span>✓</span> {alertSuccess}
             </div>
           )}
-          {allErrors.map((e, i) => (
-            <div key={i} className="matchdb-alert matchdb-alert-error">
+          {allErrors.map((e) => (
+            <div key={e} className="matchdb-alert matchdb-alert-error">
               <span>✕</span> {e}
             </div>
           ))}
@@ -447,11 +446,10 @@ function DataTable<T>({
         {loading ? (
           <table className="matchdb-table" aria-busy="true">
             <tbody>
-              {Array.from({ length: targetRowCount }).map((_, ri) => (
+              {Array.from({ length: targetRowCount }, (_, k) => `sk-${k}`).map((skKey) => (
                 <tr
-                  key={`sk-${ri}`}
+                  key={skKey}
                   className="matchdb-skeleton-row"
-                  aria-hidden="true"
                 >
                   {showRowNumbers && (
                     <td>
@@ -478,7 +476,7 @@ function DataTable<T>({
                 <col
                   key={c.key}
                   className={c.className}
-                  style={c.width !== undefined ? { width: c.width } : undefined}
+                  style={c.width === undefined ? undefined : { width: c.width }}
                 />
               ))}
             </colgroup>
@@ -520,16 +518,14 @@ function DataTable<T>({
                 const isFlashing = flashIds?.has(itemKey) ?? false;
                 const isDeleteFlashing = deleteFlashIds?.has(itemKey) ?? false;
 
+                let rowCls: string | undefined;
+                if (isDeleteFlashing) rowCls = "pub-row-delete-flash";
+                else if (isFlashing) rowCls = "pub-row-flash";
+
                 return (
                   <tr
                     key={itemKey}
-                    className={
-                      isDeleteFlashing
-                        ? "pub-row-delete-flash"
-                        : isFlashing
-                        ? "pub-row-flash"
-                        : undefined
-                    }
+                    className={rowCls}
                     onDoubleClick={
                       onRowDoubleClick
                         ? () => onRowDoubleClick(item)
@@ -554,10 +550,10 @@ function DataTable<T>({
               })}
 
               {/* Padding rows (non-paginated, fixed row count) */}
-              {!isPaginated && rowCount && (
+              {!isPaginated && !!rowCount && (
                 <PadRows
                   dataLen={pageRows.length}
-                  totalCols={totalCols}
+                  colKeys={columns.map((c) => c.key)}
                   rowCount={rowCount}
                   showRowNumbers={showRowNumbers}
                 />
@@ -565,15 +561,17 @@ function DataTable<T>({
 
               {/* Filler rows (paginated, keeps height consistent) */}
               {isPaginated &&
-                Array.from({ length: fillerCount }).map((_, i) => (
+                Array.from({ length: fillerCount }, (_, k) => ({
+                  key: `filler-${safePage}-${k}`,
+                  rowNum: safePage * currentPageSize + pageRows.length + k + 1,
+                })).map((filler) => (
                   <tr
-                    key={`filler-${i}`}
-                    aria-hidden="true"
+                    key={filler.key}
                     className="matchdb-filler-row"
                   >
                     {showRowNumbers && (
                       <td className="pub-td-rn">
-                        {safePage * currentPageSize + pageRows.length + i + 1}
+                        {filler.rowNum}
                       </td>
                     )}
                     {columns.map((col) => (
