@@ -83,3 +83,6 @@ export {
   authHeader,
   downloadBlob,
 } from "./utils";
+
+// ── Icons ───────────────────────────────────────────────────────────────────
+export { ICONS, PI } from "./icons";

@@ -1151,6 +1151,209 @@
   color: #999;
 }
 
+/* =============================================================================
+   UTILITY CLASSES — replacements for common inline style={{}} patterns
+   ============================================================================= */
+
+/* ── Flex layouts ─────────────────────────────────────────────────────────── */
+.u-flex {
+  display: flex;
+}
+.u-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.u-flex-center {
+  display: flex;
+  align-items: center;
+}
+.u-flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.u-flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.u-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.u-inline-flex {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── Gaps ─────────────────────────────────────────────────────────────────── */
+.u-gap-2 {
+  gap: 2px;
+}
+.u-gap-4 {
+  gap: 4px;
+}
+.u-gap-6 {
+  gap: 6px;
+}
+.u-gap-8 {
+  gap: 8px;
+}
+.u-gap-12 {
+  gap: 12px;
+}
+.u-gap-16 {
+  gap: 16px;
+}
+
+/* ── Font sizes ───────────────────────────────────────────────────────────── */
+.u-fs-10 {
+  font-size: 10px;
+}
+.u-fs-11 {
+  font-size: 11px;
+}
+.u-fs-12 {
+  font-size: 12px;
+}
+.u-fs-13 {
+  font-size: 13px;
+}
+.u-fs-14 {
+  font-size: 14px;
+}
+
+/* ── Font weights ─────────────────────────────────────────────────────────── */
+.u-fw-600 {
+  font-weight: 600;
+}
+.u-fw-700 {
+  font-weight: 700;
+}
+.u-fw-800 {
+  font-weight: 800;
+}
+
+/* ── Theme colors (text) ──────────────────────────────────────────────────── */
+.u-color-text {
+  color: var(--w97-text, #000);
+}
+.u-color-text-secondary {
+  color: var(--w97-text-secondary, #555);
+}
+.u-color-navy {
+  color: var(--w97-navy, #235a81);
+}
+.u-color-blue {
+  color: var(--w97-blue, #2a5fa0);
+}
+.u-color-teal {
+  color: var(--w97-teal, #008080);
+}
+.u-color-green {
+  color: var(--w97-green, #2a7a2a);
+}
+.u-color-red {
+  color: var(--w97-red, #880000);
+}
+
+/* ── Theme colors (background) ────────────────────────────────────────────── */
+.u-bg-window {
+  background: var(--w97-window, #c0c0c0);
+}
+.u-bg-btn-face {
+  background: var(--w97-btn-face, #c0c0c0);
+}
+
+/* ── Margin helpers ───────────────────────────────────────────────────────── */
+.u-m-0 {
+  margin: 0;
+}
+.u-mb-4 {
+  margin-bottom: 4px;
+}
+.u-mb-8 {
+  margin-bottom: 8px;
+}
+.u-mb-12 {
+  margin-bottom: 12px;
+}
+
+/* ── Padding helpers ──────────────────────────────────────────────────────── */
+.u-p-0 {
+  padding: 0;
+}
+.u-p-4 {
+  padding: 4px;
+}
+.u-p-8 {
+  padding: 8px;
+}
+.u-p-12 {
+  padding: 12px;
+}
+
+/* ── Overflow ─────────────────────────────────────────────────────────────── */
+.u-overflow-hidden {
+  overflow: hidden;
+}
+.u-overflow-auto {
+  overflow: auto;
+}
+
+/* ── Text helpers ─────────────────────────────────────────────────────────── */
+.u-nowrap {
+  white-space: nowrap;
+}
+.u-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.u-text-left {
+  text-align: left;
+}
+.u-text-right {
+  text-align: right;
+}
+.u-text-center {
+  text-align: center;
+}
+
+/* ── Width helpers ────────────────────────────────────────────────────────── */
+.u-w-full {
+  width: 100%;
+}
+
+/* ── Skill pill row (replaces inline flex+gap+overflow for skill lists) ──── */
+.matchdb-skill-row {
+  display: flex;
+  gap: 2px;
+  overflow: hidden;
+}
+
+/* ── Action button row (replaces inline flex+gap for button groups) ──────── */
+.matchdb-action-row {
+  display: flex;
+  gap: 4px;
+}
+
+/* ── Detail label (replaces inline fontWeight+color for detail key/value) ── */
+.matchdb-detail-label {
+  font-weight: 600;
+  color: var(--w97-text-secondary, #555);
+}
+
+/* ── Color legend squares (replaces inline color spans in charts) ────────── */
+.matchdb-legend-green {
+  color: var(--w97-green, #2a7a2a);
+}
+.matchdb-legend-teal {
+  color: var(--w97-teal, #008080);
+}
+.matchdb-legend-navy {
+  color: var(--w97-navy, #235a81);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1400px) {
   .col-mode {
@@ -1210,4 +1413,125 @@
   .matchdb-table td {
     padding: 2px 3px;
   }
+}
+
+/* ===== MODAL SYSTEM ===== */
+/* Shared overlay + window chrome for all W97-style modals.
+   Use these classes in modal components instead of re-declaring
+   the same dialog/overlay/titlebar/close patterns per-modal. */
+
+.matchdb-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+.matchdb-modal-overlay[open] {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  border: none !important;
+}
+.matchdb-modal-overlay--top {
+  z-index: 10010;
+}
+
+.matchdb-modal-window {
+  position: relative;
+  z-index: 2;
+  background: var(--w97-window, #c0c0c0);
+  border-top: 2px solid var(--w97-btn-highlight, #fff);
+  border-left: 2px solid var(--w97-btn-highlight, #fff);
+  border-right: 2px solid var(--w97-btn-dark, #404040);
+  border-bottom: 2px solid var(--w97-btn-dark, #404040);
+  box-shadow: 1px 1px 0 var(--w97-btn-dark, #404040),
+    inset 1px 1px 0 var(--w97-btn-highlight, #fff);
+  min-width: 320px;
+  max-width: 95vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.matchdb-modal-window--fit {
+  width: fit-content;
+}
+
+.matchdb-modal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px;
+  background: linear-gradient(
+    to right,
+    var(--w97-titlebar-from, #235a81),
+    var(--w97-titlebar-to, #1a4565)
+  );
+  color: var(--w97-titlebar-text, #fff);
+  font-weight: 700;
+  font-size: 12px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+  user-select: none;
+  flex-shrink: 0;
+}
+.matchdb-modal-titlebar .matchdb-modal-icon {
+  flex-shrink: 0;
+}
+.matchdb-modal-titlebar .matchdb-modal-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.matchdb-modal-close {
+  width: 18px;
+  height: 16px;
+  background: var(--w97-btn-face, #c0c0c0);
+  border-top: 1px solid var(--w97-btn-highlight, #fff);
+  border-left: 1px solid var(--w97-btn-highlight, #fff);
+  border-right: 1px solid var(--w97-btn-dark, #404040);
+  border-bottom: 1px solid var(--w97-btn-dark, #404040);
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 0;
+  color: var(--w97-text, #000);
+}
+.matchdb-modal-close:active {
+  border-top: 1px solid var(--w97-btn-dark, #404040);
+  border-left: 1px solid var(--w97-btn-dark, #404040);
+  border-right: 1px solid var(--w97-btn-highlight, #fff);
+  border-bottom: 1px solid var(--w97-btn-highlight, #fff);
+}
+
+.matchdb-modal-body {
+  flex: 1;
+  overflow: auto;
+  padding: 8px;
+}
+
+.matchdb-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 6px 8px;
+  border-top: 1px solid var(--w97-btn-shadow, #808080);
+  flex-shrink: 0;
 }
