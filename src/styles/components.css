@@ -553,6 +553,16 @@
   border-left: 1px solid var(--w97-btn-shadow, #808080);
 }
 
+/* Sticky footer row — stays at bottom of scroll area */
+.matchdb-table tfoot {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+}
+.matchdb-table tfoot td {
+  background: var(--w97-btn-face, #c0c0c0);
+}
+
 /* Auto-height modifier: no scroll, show all rows */
 .matchdb-panel.matchdb-auto-height {
   overflow: visible;
