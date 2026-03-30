@@ -6,6 +6,7 @@
  *   import "matchdb-component-library/src/styles/w97-theme.css";
  *   import "matchdb-component-library/src/styles/w97-base.css";
  *   import "matchdb-component-library/src/styles/components.css";
+ *   import "matchdb-component-library/src/styles/modern-theme.css";
  */
 
 // ── Styles (importable CSS) ─────────────────────────────────────────────────
@@ -13,6 +14,7 @@
 //   import "matchdb-component-library/src/styles/w97-theme.css";
 //   import "matchdb-component-library/src/styles/w97-base.css";
 //   import "matchdb-component-library/src/styles/components.css";
+//   import "matchdb-component-library/src/styles/modern-theme.css";
 
 // ── Atomic Components ───────────────────────────────────────────────────────
 export { default as Button } from "./components/Button/Button";
@@ -86,3 +88,27 @@ export {
 
 // ── Icons ───────────────────────────────────────────────────────────────────
 export { ICONS, PI } from "./icons";
+
+// ── Theme System ────────────────────────────────────────────────────────────
+export { ThemeProvider, useTheme } from "./theme";
+export type {
+  ThemeMode,
+  ColorScheme,
+  TextSize,
+  ThemePreferences,
+  ThemeContextValue,
+  ThemeProviderProps,
+} from "./theme";
+
+// ── Settings Components ─────────────────────────────────────────────────────
+export { default as ThemeSwitcher } from "./components/Settings/ThemeSwitcher";
+export type { ThemeSwitcherProps } from "./components/Settings/ThemeSwitcher";
+
+export { default as TextSizeControl } from "./components/Settings/TextSizeControl";
+export type { TextSizeControlProps } from "./components/Settings/TextSizeControl";
+
+export { default as ColorSchemeToggle } from "./components/Settings/ColorSchemeToggle";
+export type { ColorSchemeToggleProps } from "./components/Settings/ColorSchemeToggle";
+
+export { default as AppearanceSettings } from "./components/Settings/AppearanceSettings";
+export type { AppearanceSettingsProps } from "./components/Settings/AppearanceSettings";
