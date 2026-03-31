@@ -93,9 +93,14 @@ const meta: Meta<typeof DataTable<SampleRow>> = {
   component: DataTable,
   argTypes: {
     loading: { control: "boolean" },
-    showRowNumbers: { control: "boolean" },
-    paginate: { control: "boolean" },
+    showSerialNumber: { control: "boolean" },
+    paginated: { control: "boolean" },
     pageSize: { control: "select", options: [10, 25, 50, 100] },
+    denseMode: { control: "boolean" },
+    searchable: { control: "boolean" },
+    selectable: { control: "boolean" },
+    scrollableColumns: { control: "boolean" },
+    stickyHeader: { control: "boolean" },
   },
 };
 export default meta;
@@ -142,7 +147,7 @@ export const WithPagination: Story = {
       ...sampleData.map((r) => ({ ...r, id: `${r.id}-dup2` })),
     ],
     keyExtractor: (r) => r.id,
-    paginate: true,
+    paginated: true,
     pageSize: 10,
     title: "Paginated Table",
     titleIcon: "📄",
@@ -165,7 +170,7 @@ export const NoRowNumbers: Story = {
     columns,
     data: sampleData.slice(0, 4),
     keyExtractor: (r) => r.id,
-    showRowNumbers: false,
+    showSerialNumber: false,
     title: "No Row Numbers",
   },
 };
@@ -179,5 +184,86 @@ export const WithDownload: Story = {
     titleIcon: "📊",
     onDownload: () => alert("Download CSV triggered"),
     downloadLabel: "Export CSV",
+  },
+};
+
+export const DenseMode: Story = {
+  args: {
+    columns,
+    data: sampleData,
+    keyExtractor: (r) => r.id,
+    denseMode: true,
+    title: "Dense Mode",
+    titleIcon: "📐",
+  },
+};
+
+export const Searchable: Story = {
+  args: {
+    columns,
+    data: [
+      ...sampleData,
+      ...sampleData.map((r) => ({ ...r, id: `${r.id}-dup` })),
+    ],
+    keyExtractor: (r) => r.id,
+    searchable: true,
+    searchPlaceholder: "Search candidates...",
+    paginated: true,
+    pageSize: 10,
+    title: "Searchable Table",
+    titleIcon: "🔍",
+  },
+};
+
+export const Selectable: Story = {
+  args: {
+    columns,
+    data: sampleData,
+    keyExtractor: (r) => r.id,
+    selectable: true,
+    onSelectionChange: (rows) => console.log("Selected:", rows),
+    title: "Selectable Rows",
+    titleIcon: "☑️",
+  },
+};
+
+export const ScrollableColumns: Story = {
+  args: {
+    columns: [
+      ...columns,
+      { key: "dept", header: "Department", render: (r) => "Engineering", width: "200px" },
+      { key: "start", header: "Start Date", render: (r) => "2024-01-15", width: "150px" },
+      { key: "salary", header: "Salary", render: (r) => "$120,000", width: "150px", align: "right" as const },
+      { key: "status", header: "Status", render: (r) => "Active", width: "120px" },
+    ],
+    data: sampleData,
+    keyExtractor: (r) => r.id,
+    scrollableColumns: true,
+    maxTableWidth: 600,
+    title: "Horizontal Scroll",
+    titleIcon: "↔️",
+  },
+};
+
+export const FullFeatured: Story = {
+  args: {
+    columns,
+    data: [
+      ...sampleData,
+      ...sampleData.map((r) => ({ ...r, id: `${r.id}-dup` })),
+      ...sampleData.map((r) => ({ ...r, id: `${r.id}-dup2` })),
+    ],
+    keyExtractor: (r) => r.id,
+    paginated: true,
+    pageSize: 10,
+    searchable: true,
+    searchPlaceholder: "Search...",
+    selectable: true,
+    denseMode: true,
+    serialNumberColumnWidth: 50,
+    title: "Full Featured",
+    titleIcon: "⭐",
+    onDownload: () => alert("Download triggered"),
+    downloadLabel: "Export",
   },
 };
