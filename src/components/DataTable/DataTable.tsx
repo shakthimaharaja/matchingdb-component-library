@@ -394,7 +394,9 @@ function buildRowClassName(
 
   if (rowClassName) {
     rowClsParts.push(
-      typeof rowClassName === "string" ? rowClassName : rowClassName(item, pageIdx),
+      typeof rowClassName === "string"
+        ? rowClassName
+        : rowClassName(item, pageIdx),
     );
   }
 
