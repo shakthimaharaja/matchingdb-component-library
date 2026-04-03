@@ -777,7 +777,7 @@
 /* ===== ROW-NUMBER COLUMN — width controlled by DataTable inline style ===== */
 .pub-th-rn {
   text-align: right !important;
-  padding: 2px 4px 2px 2px !important;
+  padding: 2px 3px 2px 1px !important;
   color: var(--w97-text-secondary, #808080) !important;
   font-weight: 500 !important;
   font-size: 10px !important;
@@ -788,7 +788,7 @@
   text-align: right;
   font-size: 10px;
   color: var(--w97-text-secondary, #808080);
-  padding: 0 4px 0 2px !important;
+  padding: 0 3px 0 1px !important;
   background: var(--w97-btn-face, #c0c0c0) !important;
   border-right: 1px solid var(--w97-btn-shadow, #808080) !important;
   border-top: 1px solid var(--w97-btn-shadow, #808080) !important;

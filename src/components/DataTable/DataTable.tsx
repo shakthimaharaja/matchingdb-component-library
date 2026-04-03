@@ -242,7 +242,9 @@ export interface DataTableProps<T = unknown> {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-const toCss = (v: number | string | undefined): string | undefined => {
+type CssSize = number | string;
+
+const toCss = (v: CssSize | undefined): string | undefined => {
   if (v === undefined) return undefined;
   return typeof v === "number" ? `${v}px` : v;
 };
@@ -256,14 +258,19 @@ function defaultCellRenderer<T>(
   if (raw === null || raw === undefined) return "—";
 
   const str =
-    typeof raw === "object" ? JSON.stringify(raw) : String(raw as string | number | boolean);
+    typeof raw === "object"
+      ? JSON.stringify(raw)
+      : String(raw as string | number | boolean);
 
   switch (col.type) {
     case "number":
       return typeof raw === "number" ? raw.toLocaleString() : str;
     case "currency":
       return typeof raw === "number"
-        ? `$${raw.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        ? `$${raw.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`
         : str;
     case "date": {
       const d = new Date(raw as string | number);
@@ -276,9 +283,7 @@ function defaultCellRenderer<T>(
           });
     }
     case "badge":
-      return (
-        <span className="matchdb-type-pill">{str}</span>
-      );
+      return <span className="matchdb-type-pill">{str}</span>;
     default:
       return str;
   }
@@ -292,6 +297,358 @@ function resolveAlign(
   if (col.type === "number" || col.type === "currency") return "right";
   if (col.type === "action" || col.type === "badge") return "center";
   return undefined;
+}
+
+function buildColumnStyle(
+  column: DataTableColumn<any>,
+  defaultColumnWidth: CssSize | undefined,
+  defaultColumnMinWidth: number,
+  defaultColumnMaxWidth: number | undefined,
+  extra?: React.CSSProperties,
+): React.CSSProperties | undefined {
+  const style: React.CSSProperties = {};
+  let hasAny = false;
+
+  const width = column.width ?? defaultColumnWidth;
+  if (width !== undefined) {
+    style.width = typeof width === "number" ? `${width}px` : width;
+    hasAny = true;
+  }
+
+  const minWidth = column.minWidth ?? defaultColumnMinWidth;
+  if (minWidth) {
+    style.minWidth = `${minWidth}px`;
+    hasAny = true;
+  }
+
+  const maxWidth = column.maxWidth ?? defaultColumnMaxWidth;
+  if (maxWidth !== undefined) {
+    style.maxWidth = `${maxWidth}px`;
+    hasAny = true;
+  }
+
+  const align = resolveAlign(column);
+  if (align) {
+    style.textAlign = align;
+    hasAny = true;
+  }
+
+  if (column.fontSize) {
+    style.fontSize = toCss(column.fontSize);
+    hasAny = true;
+  }
+
+  if (extra) {
+    Object.assign(style, extra);
+    hasAny = true;
+  }
+
+  return hasAny ? style : undefined;
+}
+
+function mergeStyles(
+  base: React.CSSProperties | undefined,
+  extension: React.CSSProperties | undefined,
+): React.CSSProperties | undefined {
+  if (!base && !extension) return undefined;
+  return { ...base, ...extension };
+}
+
+function getColumnHeader(column: DataTableColumn<any>): React.ReactNode {
+  return column.headerRender
+    ? column.headerRender()
+    : column.header ?? column.label ?? column.key;
+}
+
+function renderDataCell(
+  column: DataTableColumn<any>,
+  item: any,
+  pageIdx: number,
+  globalIdx: number,
+): React.ReactNode {
+  if (column.render) {
+    return column.render(item, pageIdx, globalIdx);
+  }
+  return defaultCellRenderer(column, item);
+}
+
+function buildRowClassName(
+  item: any,
+  itemKey: string,
+  pageIdx: number,
+  flashIds: Set<string> | undefined,
+  deleteFlashIds: Set<string> | undefined,
+  selectedKeys: Set<string>,
+  rowClassName: string | ((row: any, index: number) => string) | undefined,
+): string | undefined {
+  const rowClsParts: string[] = [];
+  if (deleteFlashIds?.has(itemKey)) {
+    rowClsParts.push("pub-row-delete-flash");
+  } else if (flashIds?.has(itemKey)) {
+    rowClsParts.push("pub-row-flash");
+  }
+
+  if (selectedKeys.has(itemKey)) {
+    rowClsParts.push("matchdb-row-selected");
+  }
+
+  if (rowClassName) {
+    rowClsParts.push(
+      typeof rowClassName === "string" ? rowClassName : rowClassName(item, pageIdx),
+    );
+  }
+
+  return rowClsParts.length > 0 ? rowClsParts.join(" ") : undefined;
+}
+
+function buildCellStyle(
+  effectiveCellPadding: string | undefined,
+  effectiveCellFontSize: string | undefined,
+  effectiveRowHeight: string | undefined,
+  cellVerticalAlign: "top" | "middle" | "bottom" | undefined,
+  cellTextOverflow: "ellipsis" | "wrap" | "clip" | undefined,
+): React.CSSProperties | undefined {
+  const style: React.CSSProperties = {};
+  let hasAny = false;
+
+  if (effectiveCellPadding) {
+    style.padding = effectiveCellPadding;
+    hasAny = true;
+  }
+  if (effectiveCellFontSize) {
+    style.fontSize = effectiveCellFontSize;
+    hasAny = true;
+  }
+  if (effectiveRowHeight) {
+    style.height = effectiveRowHeight;
+    style.minHeight = effectiveRowHeight;
+    style.maxHeight = effectiveRowHeight;
+    hasAny = true;
+  }
+  if (cellVerticalAlign) {
+    style.verticalAlign = cellVerticalAlign;
+    hasAny = true;
+  }
+  if (cellTextOverflow === "wrap") {
+    style.whiteSpace = "normal";
+    style.textOverflow = "unset";
+    hasAny = true;
+  } else if (cellTextOverflow === "clip") {
+    style.textOverflow = "clip";
+    hasAny = true;
+  }
+
+  return hasAny ? style : undefined;
+}
+
+function buildHeaderCellStyle(
+  effectiveHeaderRowHeight: string | undefined,
+  effectiveCellFontSize: string | undefined,
+  effectiveCellPadding: string | undefined,
+): React.CSSProperties | undefined {
+  const style: React.CSSProperties = {};
+  let hasAny = false;
+
+  if (effectiveHeaderRowHeight) {
+    style.height = effectiveHeaderRowHeight;
+    style.minHeight = effectiveHeaderRowHeight;
+    style.maxHeight = effectiveHeaderRowHeight;
+    hasAny = true;
+  }
+  if (effectiveCellFontSize) {
+    style.fontSize = effectiveCellFontSize;
+    hasAny = true;
+  }
+  if (effectiveCellPadding) {
+    style.padding = effectiveCellPadding;
+    hasAny = true;
+  }
+
+  return hasAny ? style : undefined;
+}
+
+function buildWrapStyle(
+  maxTableHeight: CssSize | undefined,
+  scrollableColumns: boolean,
+  maxTableWidth: CssSize | undefined,
+  scrollableRows: boolean,
+): React.CSSProperties | undefined {
+  const style: React.CSSProperties = {};
+  let hasAny = false;
+
+  if (maxTableHeight) {
+    style.maxHeight = toCss(maxTableHeight);
+    hasAny = true;
+  }
+  if (scrollableColumns) {
+    style.overflowX = "auto";
+    hasAny = true;
+    if (maxTableWidth) {
+      style.maxWidth = toCss(maxTableWidth);
+    }
+  }
+  if (!scrollableRows) {
+    style.overflowY = "visible";
+    style.height = "auto";
+    style.flex = "none";
+    hasAny = true;
+  }
+
+  return hasAny ? style : undefined;
+}
+
+function buildTableMinWidth(
+  scrollableColumns: boolean,
+  columns: DataTableColumn<unknown>[],
+  showRn: boolean,
+  selectable: boolean,
+  defaultColumnMinWidth: number,
+): string | undefined {
+  if (!scrollableColumns) return undefined;
+
+  let total = showRn ? 50 : 0;
+  if (selectable) total += 36;
+  for (const column of columns) {
+    if (typeof column.width === "number") total += column.width;
+    else if (column.minWidth) total += column.minWidth;
+    else total += defaultColumnMinWidth;
+  }
+
+  return `${total}px`;
+}
+
+function filterDataByQuery<T>(
+  data: T[],
+  searchQuery: string,
+  onSearch: ((query: string) => void) | undefined,
+  columns: DataTableColumn<T>[],
+): T[] {
+  if (!searchQuery || onSearch) return data;
+
+  const query = searchQuery.toLowerCase();
+  return data.filter((item) => {
+    const record = item as Record<string, unknown>;
+    return columns.some((column) => {
+      if (column.searchable === false) return false;
+      const value = record[column.key];
+      if (value === null || value === undefined) return false;
+      const searchValue =
+        typeof value === "object"
+          ? JSON.stringify(value)
+          : String(value as string | number | boolean);
+      return searchValue.toLowerCase().includes(query);
+    });
+  });
+}
+
+function getPageRows<T>(
+  filteredData: T[],
+  isPaginated: boolean,
+  isServerSide: boolean,
+  safePage: number,
+  currentPageSize: number,
+): T[] {
+  if (isPaginated && !isServerSide) {
+    return filteredData.slice(
+      safePage * currentPageSize,
+      (safePage + 1) * currentPageSize,
+    );
+  }
+  return filteredData;
+}
+
+function toggleAllSelection<T>(
+  selectedKeys: Set<string>,
+  data: T[],
+  keyExtractor: (item: T) => string,
+): { selectedKeys: Set<string>; selectedRows: T[] } {
+  if (selectedKeys.size === data.length) {
+    return { selectedKeys: new Set(), selectedRows: [] };
+  }
+
+  return {
+    selectedKeys: new Set(data.map((item) => keyExtractor(item))),
+    selectedRows: [...data],
+  };
+}
+
+function toggleSingleSelection<T>(
+  previous: Set<string>,
+  item: T,
+  data: T[],
+  keyExtractor: (item: T) => string,
+): { selectedKeys: Set<string>; selectedRows: T[] } {
+  const next = new Set(previous);
+  const key = keyExtractor(item);
+  if (next.has(key)) next.delete(key);
+  else next.add(key);
+
+  return {
+    selectedKeys: next,
+    selectedRows: data.filter((row) => next.has(keyExtractor(row))),
+  };
+}
+
+function clampPage(page: number, totalPages: number): number {
+  return Math.max(0, Math.min(totalPages - 1, page));
+}
+
+function useSyncServerPage(
+  isServerSide: boolean,
+  serverPage: number | undefined,
+  setPage: React.Dispatch<React.SetStateAction<number>>,
+) {
+  useEffect(() => {
+    if (isServerSide && serverPage !== undefined) {
+      setPage(serverPage - 1);
+    }
+  }, [serverPage, isServerSide, setPage]);
+}
+
+function useSyncControlledPage(
+  controlledPage: number | undefined,
+  setPage: React.Dispatch<React.SetStateAction<number>>,
+) {
+  useEffect(() => {
+    if (controlledPage !== undefined) {
+      setPage(controlledPage - 1);
+    }
+  }, [controlledPage, setPage]);
+}
+
+function useSyncServerPageSize(
+  isServerSide: boolean,
+  serverPageSize: number | undefined,
+  setCurrentPageSize: React.Dispatch<React.SetStateAction<number>>,
+) {
+  useEffect(() => {
+    if (isServerSide && serverPageSize !== undefined) {
+      setCurrentPageSize(serverPageSize);
+    }
+  }, [serverPageSize, isServerSide, setCurrentPageSize]);
+}
+
+function useResetPageOnDataChange(
+  isServerSide: boolean,
+  filteredDataLength: number,
+  setPage: React.Dispatch<React.SetStateAction<number>>,
+) {
+  useEffect(() => {
+    if (!isServerSide) {
+      setPage(0);
+    }
+  }, [filteredDataLength, isServerSide, setPage]);
+}
+
+function useResetPageOnKey(
+  pageResetKey: string | number | undefined,
+  setPage: React.Dispatch<React.SetStateAction<number>>,
+) {
+  useEffect(() => {
+    if (pageResetKey !== undefined) {
+      setPage(0);
+    }
+  }, [pageResetKey, setPage]);
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -457,6 +814,7 @@ const PadRows: React.FC<{
 
 // ── DataTable component ───────────────────────────────────────────────────────
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function DataTable<T>({
   columns: rawColumns,
   data,
@@ -469,7 +827,7 @@ function DataTable<T>({
   // Serial number (#) column — support both old and new prop names
   showRowNumbers,
   showSerialNumber,
-  serialNumberColumnWidth = 50,
+  serialNumberColumnWidth = 24,
   rnColWidth,
   serialNumberLabel = "#",
   serialNumberStartFrom = 1,
@@ -565,9 +923,11 @@ function DataTable<T>({
   footerRow,
 }: Readonly<DataTableProps<T>>): React.ReactElement {
   // ── Resolve aliased props ──
-  const showRn =
-    showSerialNumber ?? showRowNumbers ?? true;
-  const rnWidth = toCss(rnColWidth ? undefined : serialNumberColumnWidth) ?? rnColWidth ?? "50px";
+  const showRn = showSerialNumber ?? showRowNumbers ?? true;
+  const rnWidth =
+    toCss(rnColWidth ? undefined : serialNumberColumnWidth) ??
+    rnColWidth ??
+    "24px";
   const effectiveServerTotal = serverTotal ?? totalRows;
   const isPaginatedProp = paginated ?? paginate;
 
@@ -590,25 +950,22 @@ function DataTable<T>({
   // ── Selection state ──
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
   const toggleAll = useCallback(() => {
-    if (selectedKeys.size === data.length) {
-      setSelectedKeys(new Set());
-      onSelectionChange?.([]);
-    } else {
-      const all = new Set(data.map((d) => keyExtractor(d)));
-      setSelectedKeys(all);
-      onSelectionChange?.([...data]);
-    }
+    const nextSelection = toggleAllSelection(selectedKeys, data, keyExtractor);
+    setSelectedKeys(nextSelection.selectedKeys);
+    onSelectionChange?.(nextSelection.selectedRows);
   }, [data, keyExtractor, selectedKeys.size, onSelectionChange]);
 
   const toggleRow = useCallback(
     (item: T) => {
-      const k = keyExtractor(item);
       setSelectedKeys((prev) => {
-        const next = new Set(prev);
-        if (next.has(k)) next.delete(k);
-        else next.add(k);
-        onSelectionChange?.(data.filter((d) => next.has(keyExtractor(d))));
-        return next;
+        const nextSelection = toggleSingleSelection(
+          prev,
+          item,
+          data,
+          keyExtractor,
+        );
+        onSelectionChange?.(nextSelection.selectedRows);
+        return nextSelection.selectedKeys;
       });
     },
     [keyExtractor, data, onSelectionChange],
@@ -620,18 +977,10 @@ function DataTable<T>({
   }, [data]);
 
   // ── Client-side search filtering ──
-  const filteredData = useMemo(() => {
-    if (!searchQuery || onSearch) return data; // server-handled or empty
-    const q = searchQuery.toLowerCase();
-    return data.filter((item) => {
-      const rec = item as Record<string, unknown>;
-      return columns.some((c) => {
-        if (c.searchable === false) return false;
-        const v = rec[c.key];
-        return v !== null && v !== undefined && (typeof v === "object" ? JSON.stringify(v) : String(v as string | number | boolean)).toLowerCase().includes(q);
-      });
-    });
-  }, [data, searchQuery, onSearch, columns]);
+  const filteredData = useMemo(
+    () => filterDataByQuery(data, searchQuery, onSearch, columns),
+    [data, searchQuery, onSearch, columns],
+  );
 
   // ── Pagination state ──
   const isServerSide =
@@ -642,47 +991,31 @@ function DataTable<T>({
   const [page, setPage] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(effectivePageSize);
 
-  // Sync server page/size
-  useEffect(() => {
-    if (isServerSide && serverPage !== undefined) setPage(serverPage - 1);
-  }, [serverPage, isServerSide]);
-  useEffect(() => {
-    if (controlledPage !== undefined) setPage(controlledPage - 1);
-  }, [controlledPage]);
-  useEffect(() => {
-    if (isServerSide && serverPageSize !== undefined)
-      setCurrentPageSize(serverPageSize);
-  }, [serverPageSize, isServerSide]);
-
-  // Reset page on data change (client) or explicit reset key
-  useEffect(() => {
-    if (!isServerSide) setPage(0);
-  }, [filteredData.length, isServerSide]);
-  useEffect(() => {
-    if (pageResetKey !== undefined) setPage(0);
-  }, [pageResetKey]);
+  useSyncServerPage(isServerSide, serverPage, setPage);
+  useSyncControlledPage(controlledPage, setPage);
+  useSyncServerPageSize(isServerSide, serverPageSize, setCurrentPageSize);
+  useResetPageOnDataChange(isServerSide, filteredData.length, setPage);
+  useResetPageOnKey(pageResetKey, setPage);
 
   const totalRecords = isServerSide
     ? effectiveServerTotal ?? 0
     : filteredData.length;
   const totalPages = Math.max(1, Math.ceil(totalRecords / currentPageSize));
   const safePage = Math.min(page, totalPages - 1);
-  let pageRows: T[];
-  if (isPaginated && !isServerSide) {
-    pageRows = filteredData.slice(
-      safePage * currentPageSize,
-      (safePage + 1) * currentPageSize,
-    );
-  } else {
-    pageRows = filteredData;
-  }
+  const pageRows = getPageRows(
+    filteredData,
+    isPaginated,
+    isServerSide,
+    safePage,
+    currentPageSize,
+  );
 
   const startRow = safePage * currentPageSize + 1;
   const endRow = Math.min((safePage + 1) * currentPageSize, totalRecords);
 
   const goToPage = useCallback(
     (p: number) => {
-      const clamped = Math.max(0, Math.min(totalPages - 1, p));
+      const clamped = clampPage(p, totalPages);
       setPage(clamped);
       if (isServerSide) onPageChange(clamped + 1, currentPageSize);
     },
@@ -709,8 +1042,7 @@ function DataTable<T>({
   const targetRowCount = rowCount ?? currentPageSize;
 
   // ── Total columns (including optional row-number col + checkbox col) ──
-  const totalCols =
-    columns.length + (showRn ? 1 : 0) + (selectable ? 1 : 0);
+  const totalCols = columns.length + (showRn ? 1 : 0) + (selectable ? 1 : 0);
 
   // ── Alerts ──
   const allErrors = [alertError, ...(alertErrors ?? [])].filter(
@@ -725,102 +1057,60 @@ function DataTable<T>({
   const effectiveRowHeight = toCss(rowHeight);
   const effectiveHeaderRowHeight = toCss(headerRowHeight);
 
-  const cellStyle = useMemo((): React.CSSProperties | undefined => {
-    const s: React.CSSProperties = {};
-    let hasAny = false;
-    if (effectiveCellPadding) {
-      s.padding = effectiveCellPadding;
-      hasAny = true;
-    }
-    if (effectiveCellFontSize) {
-      s.fontSize = effectiveCellFontSize;
-      hasAny = true;
-    }
-    if (effectiveRowHeight) {
-      s.height = effectiveRowHeight;
-      s.minHeight = effectiveRowHeight;
-      s.maxHeight = effectiveRowHeight;
-      hasAny = true;
-    }
-    if (cellVerticalAlign) {
-      s.verticalAlign = cellVerticalAlign;
-      hasAny = true;
-    }
-    if (cellTextOverflow === "wrap") {
-      s.whiteSpace = "normal";
-      s.textOverflow = "unset";
-      hasAny = true;
-    } else if (cellTextOverflow === "clip") {
-      s.textOverflow = "clip";
-      hasAny = true;
-    }
-    return hasAny ? s : undefined;
-  }, [
-    effectiveCellPadding,
-    effectiveCellFontSize,
-    effectiveRowHeight,
-    cellVerticalAlign,
-    cellTextOverflow,
-  ]);
+  const cellStyle = useMemo(
+    () =>
+      buildCellStyle(
+        effectiveCellPadding,
+        effectiveCellFontSize,
+        effectiveRowHeight,
+        cellVerticalAlign,
+        cellTextOverflow,
+      ),
+    [
+      effectiveCellPadding,
+      effectiveCellFontSize,
+      effectiveRowHeight,
+      cellVerticalAlign,
+      cellTextOverflow,
+    ],
+  );
 
-  const headerCellStyle = useMemo((): React.CSSProperties | undefined => {
-    const s: React.CSSProperties = {};
-    let hasAny = false;
-    if (effectiveHeaderRowHeight) {
-      s.height = effectiveHeaderRowHeight;
-      s.minHeight = effectiveHeaderRowHeight;
-      s.maxHeight = effectiveHeaderRowHeight;
-      hasAny = true;
-    }
-    if (effectiveCellFontSize) {
-      s.fontSize = effectiveCellFontSize;
-      hasAny = true;
-    }
-    if (effectiveCellPadding) {
-      s.padding = effectiveCellPadding;
-      hasAny = true;
-    }
-    return hasAny ? s : undefined;
-  }, [effectiveHeaderRowHeight, effectiveCellFontSize, effectiveCellPadding]);
+  const headerCellStyle = useMemo(
+    () =>
+      buildHeaderCellStyle(
+        effectiveHeaderRowHeight,
+        effectiveCellFontSize,
+        effectiveCellPadding,
+      ),
+    [effectiveHeaderRowHeight, effectiveCellFontSize, effectiveCellPadding],
+  );
 
   // ── Scroll container style ──
   const wrapRef = useRef<HTMLDivElement>(null);
 
-  const wrapStyle = useMemo((): React.CSSProperties | undefined => {
-    const s: React.CSSProperties = {};
-    let hasAny = false;
-    if (maxTableHeight) {
-      s.maxHeight = toCss(maxTableHeight);
-      hasAny = true;
-    }
-    if (scrollableColumns) {
-      s.overflowX = "auto";
-      hasAny = true;
-      if (maxTableWidth) {
-        s.maxWidth = toCss(maxTableWidth);
-      }
-    }
-    if (!scrollableRows) {
-      s.overflowY = "visible";
-      s.height = "auto";
-      s.flex = "none";
-      hasAny = true;
-    }
-    return hasAny ? s : undefined;
-  }, [maxTableHeight, scrollableColumns, maxTableWidth, scrollableRows]);
+  const wrapStyle = useMemo(
+    () =>
+      buildWrapStyle(
+        maxTableHeight,
+        scrollableColumns,
+        maxTableWidth,
+        scrollableRows,
+      ),
+    [maxTableHeight, scrollableColumns, maxTableWidth, scrollableRows],
+  );
 
   // ── Compute table min-width for horizontal scroll ──
-  const tableMinWidth = useMemo(() => {
-    if (!scrollableColumns) return undefined;
-    let total = showRn ? 50 : 0;
-    if (selectable) total += 36;
-    for (const c of columns) {
-      if (typeof c.width === "number") total += c.width;
-      else if (c.minWidth) total += c.minWidth;
-      else total += defaultColumnMinWidth;
-    }
-    return `${total}px`;
-  }, [scrollableColumns, columns, showRn, selectable, defaultColumnMinWidth]);
+  const tableMinWidth = useMemo(
+    () =>
+      buildTableMinWidth(
+        scrollableColumns,
+        columns as DataTableColumn<unknown>[],
+        showRn,
+        selectable,
+        defaultColumnMinWidth,
+      ),
+    [scrollableColumns, columns, showRn, selectable, defaultColumnMinWidth],
+  );
 
   // ── Render ──
   const wrapCls = [
@@ -834,81 +1124,10 @@ function DataTable<T>({
     .join(" ");
   const rowLabel = `${totalRecords} row${totalRecords === 1 ? "" : "s"}`;
 
-  /** Build inline style for a single column's <col> and cells */
-  const colCellStyle = (
-    c: DataTableColumn<T>,
-    extra?: React.CSSProperties,
-  ): React.CSSProperties | undefined => {
-    const s: React.CSSProperties = {};
-    let hasAny = false;
-
-    const w = c.width ?? defaultColumnWidth;
-    if (w !== undefined) {
-      s.width = typeof w === "number" ? `${w}px` : w;
-      hasAny = true;
-    }
-    const mn = c.minWidth ?? defaultColumnMinWidth;
-    if (mn) {
-      s.minWidth = `${mn}px`;
-      hasAny = true;
-    }
-    const mx = c.maxWidth ?? defaultColumnMaxWidth;
-    if (mx !== undefined) {
-      s.maxWidth = `${mx}px`;
-      hasAny = true;
-    }
-
-    const align = resolveAlign(c as DataTableColumn<unknown>);
-    if (align) {
-      s.textAlign = align;
-      hasAny = true;
-    }
-    if (c.fontSize) {
-      s.fontSize = toCss(c.fontSize);
-      hasAny = true;
-    }
-
-    if (extra) {
-      Object.assign(s, extra);
-      hasAny = true;
-    }
-    return hasAny ? s : undefined;
-  };
-
-  /** Merge cell style with column cell style */
-  const mergedCellStyle = (c: DataTableColumn<T>): React.CSSProperties | undefined => {
-    const col = colCellStyle(c);
-    if (!cellStyle && !col) return undefined;
-    return { ...cellStyle, ...col };
-  };
-
-  /** Merge header cell style with column-specific header style */
-  const mergedHeaderStyle = (c: DataTableColumn<T>): React.CSSProperties | undefined => {
-    const col = colCellStyle(c);
-    if (!headerCellStyle && !col) return undefined;
-    return { ...headerCellStyle, ...col };
-  };
-
-  /** Resolve the effective column header content */
-  const colHeader = (c: DataTableColumn<T>): React.ReactNode =>
-    c.headerRender ? c.headerRender() : (c.header ?? c.label ?? c.key);
-
-  /** Render a single data cell */
-  const renderCell = (
-    c: DataTableColumn<T>,
-    item: T,
-    pageIdx: number,
-    globalIdx: number,
-  ): React.ReactNode => {
-    if (c.render) return c.render(item, pageIdx, globalIdx);
-    return defaultCellRenderer(c, item);
-  };
-
   // ── Sticky column z-indexes ──
-  const stickyFirstStyle: React.CSSProperties | undefined =
-    stickyFirstColumn
-      ? { position: "sticky", left: 0, zIndex: 5 }
-      : undefined;
+  const stickyFirstStyle: React.CSSProperties | undefined = stickyFirstColumn
+    ? { position: "sticky", left: 0, zIndex: 5 }
+    : undefined;
   const stickyCornerStyle: React.CSSProperties | undefined =
     stickyFirstColumn && stickyHeader
       ? { position: "sticky", left: 0, top: 0, zIndex: 15 }
@@ -984,11 +1203,7 @@ function DataTable<T>({
       )}
 
       {/* Table */}
-      <div
-        className="matchdb-table-wrap"
-        ref={wrapRef}
-        style={wrapStyle}
-      >
+      <div className="matchdb-table-wrap" ref={wrapRef} style={wrapStyle}>
         {loading ? (
           <table
             className="matchdb-table"
@@ -1034,9 +1249,7 @@ function DataTable<T>({
             }}
           >
             <colgroup>
-              {showRn && (
-                <col style={{ width: rnWidth }} />
-              )}
+              {showRn && <col style={{ width: rnWidth }} />}
               {selectable && <col style={{ width: 36 }} />}
               {columns.map((c) => {
                 const w = c.width ?? defaultColumnWidth;
@@ -1071,10 +1284,7 @@ function DataTable<T>({
                   </th>
                 )}
                 {selectable && (
-                  <th
-                    className="matchdb-th-checkbox"
-                    style={headerCellStyle}
-                  >
+                  <th className="matchdb-th-checkbox" style={headerCellStyle}>
                     <input
                       type="checkbox"
                       checked={
@@ -1088,13 +1298,23 @@ function DataTable<T>({
                 {columns.map((c) => (
                   <th
                     key={c.key}
-                    className={[c.className, c.headerClassName]
-                      .filter(Boolean)
-                      .join(" ") || undefined}
-                    style={mergedHeaderStyle(c)}
+                    className={
+                      [c.className, c.headerClassName]
+                        .filter(Boolean)
+                        .join(" ") || undefined
+                    }
+                    style={mergeStyles(
+                      headerCellStyle,
+                      buildColumnStyle(
+                        c as DataTableColumn<unknown>,
+                        defaultColumnWidth,
+                        defaultColumnMinWidth,
+                        defaultColumnMaxWidth,
+                      ),
+                    )}
                     {...c.thProps}
                   >
-                    {colHeader(c)}
+                    {getColumnHeader(c)}
                   </th>
                 ))}
               </tr>
@@ -1112,50 +1332,33 @@ function DataTable<T>({
               {/* Data rows */}
               {pageRows.map((item, pageIdx) => {
                 const globalIdx = isPaginated
-                  ? safePage * currentPageSize +
-                    pageIdx +
-                    serialNumberStartFrom
+                  ? safePage * currentPageSize + pageIdx + serialNumberStartFrom
                   : pageIdx + serialNumberStartFrom;
                 const itemKey = keyExtractor(item);
-                const isFlashing = flashIds?.has(itemKey) ?? false;
-                const isDeleteFlashing =
-                  deleteFlashIds?.has(itemKey) ?? false;
                 const isSelected = selectedKeys.has(itemKey);
-
-                const rowClsParts: string[] = [];
-                if (isDeleteFlashing) rowClsParts.push("pub-row-delete-flash");
-                else if (isFlashing) rowClsParts.push("pub-row-flash");
-                if (isSelected) rowClsParts.push("matchdb-row-selected");
-
-                // Dynamic rowClassName
-                if (rowClassName) {
-                  if (typeof rowClassName === "string")
-                    rowClsParts.push(rowClassName);
-                  else rowClsParts.push(rowClassName(item, pageIdx));
-                }
-
-                const rowCls =
-                  rowClsParts.length > 0
-                    ? rowClsParts.join(" ")
-                    : undefined;
+                const rowCls = buildRowClassName(
+                  item,
+                  itemKey,
+                  pageIdx,
+                  flashIds,
+                  deleteFlashIds,
+                  selectedKeys,
+                  rowClassName,
+                );
 
                 return (
                   <tr
                     key={itemKey}
                     className={rowCls}
                     onClick={
-                      onRowClick
-                        ? () => onRowClick(item, pageIdx)
-                        : undefined
+                      onRowClick ? () => onRowClick(item, pageIdx) : undefined
                     }
                     onDoubleClick={
                       onRowDoubleClick
                         ? () => onRowDoubleClick(item)
                         : undefined
                     }
-                    style={
-                      onRowClick ? { cursor: "pointer" } : undefined
-                    }
+                    style={onRowClick ? { cursor: "pointer" } : undefined}
                   >
                     {showRn && (
                       <td
@@ -1186,9 +1389,22 @@ function DataTable<T>({
                         key={c.key}
                         className={c.className}
                         title={c.tooltip ? c.tooltip(item) : undefined}
-                        style={mergedCellStyle(c)}
+                        style={mergeStyles(
+                          cellStyle,
+                          buildColumnStyle(
+                            c as DataTableColumn<unknown>,
+                            defaultColumnWidth,
+                            defaultColumnMinWidth,
+                            defaultColumnMaxWidth,
+                          ),
+                        )}
                       >
-                        {renderCell(c, item, pageIdx, globalIdx)}
+                        {renderDataCell(
+                          c as DataTableColumn<unknown>,
+                          item,
+                          pageIdx,
+                          globalIdx,
+                        )}
                       </td>
                     ))}
                   </tr>
@@ -1218,10 +1434,7 @@ function DataTable<T>({
                 })).map((filler) => (
                   <tr key={filler.key} className="matchdb-filler-row">
                     {showRn && (
-                      <td
-                        className="pub-td-rn"
-                        style={stickyFirstStyle}
-                      >
+                      <td className="pub-td-rn" style={stickyFirstStyle}>
                         {filler.rowNum}
                       </td>
                     )}

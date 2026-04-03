@@ -82,15 +82,15 @@ matchingdb-component-library/
 
 ### Compound
 
-| Component | Export      | Description                                              |
-| --------- | ----------- | -------------------------------------------------------- |
+| Component | Export      | Description                                                                                                         |
+| --------- | ----------- | ------------------------------------------------------------------------------------------------------------------- |
 | DataTable | `DataTable` | Fully prop-driven data table with pagination, search, selection, scroll, dense mode, column types, flash animations |
-| Toolbar   | `Toolbar`   | Title bar with integrated actions (search, buttons, CSV) |
-| Tabs      | `Tabs`      | W97-themed tab switcher                                  |
-| FilterBar | `FilterBar` | Horizontal filter chip bar                               |
-| StatBar   | `StatBar`   | Horizontal stat indicators bar                           |
-| Panel     | `Panel`     | W97 raised/sunken panel container                        |
-| Footnote  | `Footnote`  | Footer footnote with `FootnoteSep` separator             |
+| Toolbar   | `Toolbar`   | Title bar with integrated actions (search, buttons, CSV)                                                            |
+| Tabs      | `Tabs`      | W97-themed tab switcher                                                                                             |
+| FilterBar | `FilterBar` | Horizontal filter chip bar                                                                                          |
+| StatBar   | `StatBar`   | Horizontal stat indicators bar                                                                                      |
+| Panel     | `Panel`     | W97 raised/sunken panel container                                                                                   |
+| Footnote  | `Footnote`  | Footer footnote with `FootnoteSep` separator                                                                        |
 
 ---
 
@@ -100,138 +100,138 @@ matchingdb-component-library/
 
 ### Column Definition (`DataTableColumn<T>`)
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `key` | `string` | — | Unique key for React reconciliation |
-| `header` / `label` | `ReactNode` / `string` | — | Column header content |
-| `width` | `string \| number` | `auto` | CSS width for the column |
-| `minWidth` | `number` | — | Minimum width in px |
-| `maxWidth` | `number` | — | Maximum width in px |
-| `align` | `'left' \| 'center' \| 'right'` | `'left'` | Text alignment (numbers/currency auto-right) |
-| `type` | `'text' \| 'number' \| 'date' \| 'currency' \| 'badge' \| 'avatar' \| 'action' \| 'custom'` | `'text'` | Column type for default formatting |
-| `render` | `(item, pageIdx, globalIdx) => ReactNode` | — | Custom cell renderer |
-| `headerRender` | `() => ReactNode` | — | Custom header renderer |
-| `hidden` | `boolean` | `false` | Hide this column |
-| `sticky` | `boolean` | `false` | Stick on horizontal scroll |
-| `sortable` | `boolean` | — | Override table-level sortable |
-| `searchable` | `boolean` | — | Include in search filtering |
-| `className` | `string` | — | Extra CSS class on cells |
-| `headerClassName` | `string` | — | Extra CSS class on header cell |
-| `tooltip` | `(item) => string` | — | Tooltip generator |
-| `skeletonWidth` | `number` | `60` | Loading shimmer bar width |
+| Prop               | Type                                                                                        | Default  | Description                                  |
+| ------------------ | ------------------------------------------------------------------------------------------- | -------- | -------------------------------------------- |
+| `key`              | `string`                                                                                    | —        | Unique key for React reconciliation          |
+| `header` / `label` | `ReactNode` / `string`                                                                      | —        | Column header content                        |
+| `width`            | `string \| number`                                                                          | `auto`   | CSS width for the column                     |
+| `minWidth`         | `number`                                                                                    | —        | Minimum width in px                          |
+| `maxWidth`         | `number`                                                                                    | —        | Maximum width in px                          |
+| `align`            | `'left' \| 'center' \| 'right'`                                                             | `'left'` | Text alignment (numbers/currency auto-right) |
+| `type`             | `'text' \| 'number' \| 'date' \| 'currency' \| 'badge' \| 'avatar' \| 'action' \| 'custom'` | `'text'` | Column type for default formatting           |
+| `render`           | `(item, pageIdx, globalIdx) => ReactNode`                                                   | —        | Custom cell renderer                         |
+| `headerRender`     | `() => ReactNode`                                                                           | —        | Custom header renderer                       |
+| `hidden`           | `boolean`                                                                                   | `false`  | Hide this column                             |
+| `sticky`           | `boolean`                                                                                   | `false`  | Stick on horizontal scroll                   |
+| `sortable`         | `boolean`                                                                                   | —        | Override table-level sortable                |
+| `searchable`       | `boolean`                                                                                   | —        | Include in search filtering                  |
+| `className`        | `string`                                                                                    | —        | Extra CSS class on cells                     |
+| `headerClassName`  | `string`                                                                                    | —        | Extra CSS class on header cell               |
+| `tooltip`          | `(item) => string`                                                                          | —        | Tooltip generator                            |
+| `skeletonWidth`    | `number`                                                                                    | `60`     | Loading shimmer bar width                    |
 
 ### Table Props (`DataTableProps<T>`)
 
 #### Core
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `columns` | `DataTableColumn<T>[]` | — | Column definitions |
-| `data` | `T[]` | — | Row data |
-| `keyExtractor` | `(item: T) => string` | — | Unique row key function |
-| `loading` | `boolean` | `false` | Show loading shimmer |
+| Prop           | Type                   | Default | Description             |
+| -------------- | ---------------------- | ------- | ----------------------- |
+| `columns`      | `DataTableColumn<T>[]` | —       | Column definitions      |
+| `data`         | `T[]`                  | —       | Row data                |
+| `keyExtractor` | `(item: T) => string`  | —       | Unique row key function |
+| `loading`      | `boolean`              | `false` | Show loading shimmer    |
 
 #### Title Bar
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | — | Table title |
-| `titleIcon` | `string` | — | Emoji/icon before title |
-| `titleExtra` | `ReactNode` | — | Extra content in title bar |
+| Prop         | Type        | Default | Description                |
+| ------------ | ----------- | ------- | -------------------------- |
+| `title`      | `string`    | —       | Table title                |
+| `titleIcon`  | `string`    | —       | Emoji/icon before title    |
+| `titleExtra` | `ReactNode` | —       | Extra content in title bar |
 
 #### Serial Number (#) Column
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `showSerialNumber` | `boolean` | `true` | Show the # column |
-| `serialNumberColumnWidth` | `number \| string` | `50` | Width of the # column |
-| `serialNumberLabel` | `string` | `'#'` | Header label |
-| `serialNumberStartFrom` | `number` | `1` | Starting number |
+| Prop                      | Type               | Default | Description           |
+| ------------------------- | ------------------ | ------- | --------------------- |
+| `showSerialNumber`        | `boolean`          | `true`  | Show the # column     |
+| `serialNumberColumnWidth` | `number \| string` | `50`    | Width of the # column |
+| `serialNumberLabel`       | `string`           | `'#'`   | Header label          |
+| `serialNumberStartFrom`   | `number`           | `1`     | Starting number       |
 
 #### Pagination
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `paginated` | `boolean` | `false` | Enable pagination |
-| `pageSize` | `number` | `25` | Rows per page |
-| `pageSizeOptions` | `number[]` | `[10,25,50,100]` | Dropdown options |
-| `showPageSizeSelector` | `boolean` | `true` | Show per-page selector |
-| `currentPage` | `number` | — | Controlled page (1-based) |
-| `paginationExtra` | `ReactNode` | — | Extra content in pagination bar |
+| Prop                   | Type        | Default          | Description                     |
+| ---------------------- | ----------- | ---------------- | ------------------------------- |
+| `paginated`            | `boolean`   | `false`          | Enable pagination               |
+| `pageSize`             | `number`    | `25`             | Rows per page                   |
+| `pageSizeOptions`      | `number[]`  | `[10,25,50,100]` | Dropdown options                |
+| `showPageSizeSelector` | `boolean`   | `true`           | Show per-page selector          |
+| `currentPage`          | `number`    | —                | Controlled page (1-based)       |
+| `paginationExtra`      | `ReactNode` | —                | Extra content in pagination bar |
 
 #### Server-Side Pagination
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `serverTotal` | `number` | Total row count from server |
-| `serverPage` | `number` | Current server page |
-| `serverPageSize` | `number` | Server page size |
-| `onPageChange` | `(page, pageSize) => void` | Page change callback |
+| Prop             | Type                       | Description                 |
+| ---------------- | -------------------------- | --------------------------- |
+| `serverTotal`    | `number`                   | Total row count from server |
+| `serverPage`     | `number`                   | Current server page         |
+| `serverPageSize` | `number`                   | Server page size            |
+| `onPageChange`   | `(page, pageSize) => void` | Page change callback        |
 
 #### Scrolling & Layout
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `scrollableRows` | `boolean` | `true` | Enable vertical scroll |
-| `maxTableHeight` | `number \| string` | — | Max height before vertical scroll |
-| `scrollableColumns` | `boolean` | `false` | Enable horizontal scroll |
-| `maxTableWidth` | `number \| string` | `'100%'` | Max width for horizontal scroll |
-| `stickyHeader` | `boolean` | `true` | Sticky header on vertical scroll |
-| `stickyFirstColumn` | `boolean` | `false` | Sticky first column on horizontal scroll |
+| Prop                | Type               | Default  | Description                              |
+| ------------------- | ------------------ | -------- | ---------------------------------------- |
+| `scrollableRows`    | `boolean`          | `true`   | Enable vertical scroll                   |
+| `maxTableHeight`    | `number \| string` | —        | Max height before vertical scroll        |
+| `scrollableColumns` | `boolean`          | `false`  | Enable horizontal scroll                 |
+| `maxTableWidth`     | `number \| string` | `'100%'` | Max width for horizontal scroll          |
+| `stickyHeader`      | `boolean`          | `true`   | Sticky header on vertical scroll         |
+| `stickyFirstColumn` | `boolean`          | `false`  | Sticky first column on horizontal scroll |
 
 #### Dense Mode & Cell Config
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `denseMode` | `boolean` | `false` | Compact rows (22px height, reduced padding) |
-| `rowHeight` | `number \| string` | `28` | Fixed row height |
-| `headerRowHeight` | `number \| string` | `28` | Header row height |
-| `cellFontSize` | `number \| string` | inherited | Cell font size |
-| `cellPadding` | `string` | `'4px 6px'` | Cell padding |
-| `cellVerticalAlign` | `'top' \| 'middle' \| 'bottom'` | `'middle'` | Vertical alignment |
-| `cellTextOverflow` | `'ellipsis' \| 'wrap' \| 'clip'` | `'ellipsis'` | Text overflow |
+| Prop                | Type                             | Default      | Description                                 |
+| ------------------- | -------------------------------- | ------------ | ------------------------------------------- |
+| `denseMode`         | `boolean`                        | `false`      | Compact rows (22px height, reduced padding) |
+| `rowHeight`         | `number \| string`               | `28`         | Fixed row height                            |
+| `headerRowHeight`   | `number \| string`               | `28`         | Header row height                           |
+| `cellFontSize`      | `number \| string`               | inherited    | Cell font size                              |
+| `cellPadding`       | `string`                         | `'4px 6px'`  | Cell padding                                |
+| `cellVerticalAlign` | `'top' \| 'middle' \| 'bottom'`  | `'middle'`   | Vertical alignment                          |
+| `cellTextOverflow`  | `'ellipsis' \| 'wrap' \| 'clip'` | `'ellipsis'` | Text overflow                               |
 
 #### Search & Selection
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `searchable` | `boolean` | `false` | Show search bar |
-| `searchPlaceholder` | `string` | — | Search input placeholder |
-| `onSearch` | `(query: string) => void` | — | Search callback |
-| `filterColumns` | `string[]` | — | Column keys to filter on |
-| `selectable` | `boolean` | `false` | Show checkboxes |
-| `onSelectionChange` | `(selectedRows: T[]) => void` | — | Selection callback |
+| Prop                | Type                          | Default | Description              |
+| ------------------- | ----------------------------- | ------- | ------------------------ |
+| `searchable`        | `boolean`                     | `false` | Show search bar          |
+| `searchPlaceholder` | `string`                      | —       | Search input placeholder |
+| `onSearch`          | `(query: string) => void`     | —       | Search callback          |
+| `filterColumns`     | `string[]`                    | —       | Column keys to filter on |
+| `selectable`        | `boolean`                     | `false` | Show checkboxes          |
+| `onSelectionChange` | `(selectedRows: T[]) => void` | —       | Selection callback       |
 
 #### Styling
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | — | Wrapper class |
-| `headerClassName` | `string` | — | Header row class |
-| `rowClassName` | `string \| (row, idx) => string` | — | Row class |
-| `tableStyle` | `CSSProperties` | — | Inline style on `<table>` |
-| `containerStyle` | `CSSProperties` | — | Inline style on wrapper |
+| Prop              | Type                             | Default | Description               |
+| ----------------- | -------------------------------- | ------- | ------------------------- |
+| `className`       | `string`                         | —       | Wrapper class             |
+| `headerClassName` | `string`                         | —       | Header row class          |
+| `rowClassName`    | `string \| (row, idx) => string` | —       | Row class                 |
+| `tableStyle`      | `CSSProperties`                  | —       | Inline style on `<table>` |
+| `containerStyle`  | `CSSProperties`                  | —       | Inline style on wrapper   |
 
 #### Callbacks & Features
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `onRowClick` | `(row, idx) => void` | Row click handler |
-| `onRowDoubleClick` | `(item) => void` | Row double-click handler |
-| `flashIds` | `Set<string>` | Row IDs to flash-animate (new) |
-| `deleteFlashIds` | `Set<string>` | Row IDs to flash-animate (deleted) |
-| `emptyMessage` | `string` | Message when data is empty |
-| `footerRow` | `ReactNode` | Footer row(s) inside `<tfoot>` |
-| `onDownload` | `() => void` | Download button callback |
-| `downloadLabel` | `string` | Download button label |
+| Prop               | Type                 | Description                        |
+| ------------------ | -------------------- | ---------------------------------- |
+| `onRowClick`       | `(row, idx) => void` | Row click handler                  |
+| `onRowDoubleClick` | `(item) => void`     | Row double-click handler           |
+| `flashIds`         | `Set<string>`        | Row IDs to flash-animate (new)     |
+| `deleteFlashIds`   | `Set<string>`        | Row IDs to flash-animate (deleted) |
+| `emptyMessage`     | `string`             | Message when data is empty         |
+| `footerRow`        | `ReactNode`          | Footer row(s) inside `<tfoot>`     |
+| `onDownload`       | `() => void`         | Download button callback           |
+| `downloadLabel`    | `string`             | Download button label              |
 
 ### Migration from Legacy Props
 
-| Old Prop | New Prop | Notes |
-|----------|----------|-------|
-| `paginate` | `paginated` | Both still work |
-| `showRowNumbers` | `showSerialNumber` | Both still work |
-| `rnColWidth` | `serialNumberColumnWidth` | Both still work |
+| Old Prop         | New Prop                  | Notes           |
+| ---------------- | ------------------------- | --------------- |
+| `paginate`       | `paginated`               | Both still work |
+| `showRowNumbers` | `showSerialNumber`        | Both still work |
+| `rnColWidth`     | `serialNumberColumnWidth` | Both still work |
 
 ### Usage Example
 

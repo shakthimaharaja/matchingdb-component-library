@@ -231,10 +231,31 @@ export const ScrollableColumns: Story = {
   args: {
     columns: [
       ...columns,
-      { key: "dept", header: "Department", render: (r) => "Engineering", width: "200px" },
-      { key: "start", header: "Start Date", render: (r) => "2024-01-15", width: "150px" },
-      { key: "salary", header: "Salary", render: (r) => "$120,000", width: "150px", align: "right" as const },
-      { key: "status", header: "Status", render: (r) => "Active", width: "120px" },
+      {
+        key: "dept",
+        header: "Department",
+        render: (r) => "Engineering",
+        width: "200px",
+      },
+      {
+        key: "start",
+        header: "Start Date",
+        render: (r) => "2024-01-15",
+        width: "150px",
+      },
+      {
+        key: "salary",
+        header: "Salary",
+        render: (r) => "$120,000",
+        width: "150px",
+        align: "right" as const,
+      },
+      {
+        key: "status",
+        header: "Status",
+        render: (r) => "Active",
+        width: "120px",
+      },
     ],
     data: sampleData,
     keyExtractor: (r) => r.id,
