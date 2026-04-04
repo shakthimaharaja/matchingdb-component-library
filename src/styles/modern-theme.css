@@ -201,7 +201,7 @@
   border: 1px solid var(--m-border);
   border-radius: var(--m-radius-sm);
   font-weight: 500;
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   padding: 6px 14px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -288,7 +288,7 @@
   color: var(--m-primary);
   border: none;
   font-weight: 500;
-  font-size: 12px;
+  font-size: calc(12px * var(--fs-scale, 1));
   cursor: pointer;
   padding: 2px 6px;
   border-radius: var(--m-radius-xs);
@@ -312,7 +312,7 @@
   border: 1px solid var(--m-input-border);
   border-radius: var(--m-radius-sm);
   padding: 7px 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   outline: none;
   box-shadow: var(--m-shadow-xs);
@@ -343,15 +343,15 @@
 [data-theme="modern"] .matchdb-panel-title-text {
   color: var(--m-text);
   font-weight: 600;
-  font-size: 15px;
+  font-size: calc(15px * var(--fs-scale, 1));
   text-shadow: none;
 }
 [data-theme="modern"] .matchdb-panel-title-icon {
-  font-size: 16px;
+  font-size: calc(16px * var(--fs-scale, 1));
 }
 [data-theme="modern"] .matchdb-panel-title-meta {
   color: var(--m-text-muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--fs-scale, 1));
 }
 
 /* ── Tabs ─────────────────────────────────────────────────────────────────── */
@@ -369,7 +369,7 @@
   margin-bottom: -2px;
   padding: 10px 18px;
   font-weight: 500;
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
   border-radius: 0;
@@ -417,26 +417,26 @@
 }
 [data-theme="modern"] .matchdb-stat-value {
   font-weight: 700;
-  font-size: 20px;
+  font-size: calc(20px * var(--fs-scale, 1));
   color: var(--m-text);
 }
 [data-theme="modern"] .matchdb-stat-label {
   color: var(--m-text-secondary);
-  font-size: 12px;
+  font-size: calc(12px * var(--fs-scale, 1));
   font-weight: 500;
 }
 [data-theme="modern"] .matchdb-stat-rect-sub {
   border-style: dashed;
 }
 [data-theme="modern"] .matchdb-stat-rect-sub .matchdb-stat-value {
-  font-size: 16px;
+  font-size: calc(16px * var(--fs-scale, 1));
 }
 
 /* ── Alert ────────────────────────────────────────────────────────────────── */
 [data-theme="modern"] .matchdb-alert {
   border-radius: var(--m-radius);
   padding: 10px 14px;
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   font-weight: 500;
   border: 1px solid;
 }
@@ -458,7 +458,7 @@
   border: 1px solid var(--m-border);
   border-radius: var(--m-radius-full);
   padding: 3px 10px;
-  font-size: 11px;
+  font-size: calc(11px * var(--fs-scale, 1));
   font-weight: 600;
 }
 [data-theme="modern"] .vdp-status-active {
@@ -496,7 +496,7 @@
 [data-theme="modern"] .matchdb-meter-label {
   color: var(--m-text-secondary);
   font-weight: 600;
-  font-size: 12px;
+  font-size: calc(12px * var(--fs-scale, 1));
 }
 
 /* ── FilterBar ────────────────────────────────────────────────────────────── */
@@ -510,7 +510,7 @@
 [data-theme="modern"] .matchdb-filter-label {
   color: var(--m-text-secondary);
   font-weight: 600;
-  font-size: 12px;
+  font-size: calc(12px * var(--fs-scale, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -518,7 +518,7 @@
 /* ── Footnote ─────────────────────────────────────────────────────────────── */
 [data-theme="modern"] .matchdb-footnote {
   color: var(--m-text-muted);
-  font-size: 11px;
+  font-size: calc(11px * var(--fs-scale, 1));
   padding: 8px 0;
 }
 [data-theme="modern"] .matchdb-footnote-sep {
@@ -541,7 +541,7 @@
   background: var(--m-surface);
   color: var(--m-text-secondary);
   font-weight: 600;
-  font-size: 11px;
+  font-size: calc(11px * var(--fs-scale, 1));
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid var(--m-border);
@@ -552,7 +552,7 @@
 [data-theme="modern"] .matchdb-table-wrap tbody td {
   padding: 10px 14px;
   border-bottom: 1px solid var(--m-divider);
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   color: var(--m-text);
   border-right: none;
   border-left: none;
@@ -575,7 +575,7 @@
   color: var(--m-text-secondary);
   border: 1px solid var(--m-border);
   border-radius: var(--m-radius-sm);
-  font-size: 12px;
+  font-size: calc(12px * var(--fs-scale, 1));
   padding: 4px 10px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -613,7 +613,7 @@
 [data-theme="modern"] .w97-titlebar-label {
   color: var(--m-text) !important;
   font-weight: 600 !important;
-  font-size: 16px !important;
+  font-size: calc(16px * var(--fs-scale, 1)) !important;
   text-shadow: none !important;
 }
 [data-theme="modern"] .w97-close {
@@ -621,7 +621,7 @@
   color: var(--m-text-muted) !important;
   border: none !important;
   border-radius: var(--m-radius-sm) !important;
-  font-size: 18px !important;
+  font-size: calc(18px * var(--fs-scale, 1)) !important;
   box-shadow: none !important;
 }
 [data-theme="modern"] .w97-close:hover {
@@ -649,7 +649,7 @@
 [data-theme="modern"] .matchdb-label {
   color: var(--m-text-secondary);
   font-weight: 600;
-  font-size: 12px;
+  font-size: calc(12px * var(--fs-scale, 1));
 }
 [data-theme="modern"] .matchdb-link-btn {
   color: var(--m-primary);
@@ -681,7 +681,7 @@
 .matchdb-settings-label {
   display: block;
   font-weight: 600;
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   margin-bottom: 8px;
   color: var(--w97-text, #333);
 }
@@ -714,11 +714,11 @@
 }
 .matchdb-theme-option-label {
   font-weight: 600;
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   color: var(--w97-text, #333);
 }
 .matchdb-theme-option-desc {
-  font-size: 11px;
+  font-size: calc(11px * var(--fs-scale, 1));
   color: var(--w97-text-secondary, #555);
 }
 
@@ -771,11 +771,11 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 .matchdb-color-scheme-icon {
-  font-size: 16px;
+  font-size: calc(16px * var(--fs-scale, 1));
 }
 .matchdb-color-scheme-label {
   font-weight: 500;
-  font-size: 13px;
+  font-size: calc(13px * var(--fs-scale, 1));
   color: var(--w97-text, #333);
 }
 
@@ -827,7 +827,7 @@
   color: var(--w97-text, #333);
 }
 .matchdb-text-size-label {
-  font-size: 11px;
+  font-size: calc(11px * var(--fs-scale, 1));
   color: var(--w97-text-secondary, #555);
 }
 
@@ -856,7 +856,7 @@
   max-width: 480px;
 }
 .matchdb-appearance-title {
-  font-size: 16px;
+  font-size: calc(16px * var(--fs-scale, 1));
   font-weight: 700;
   margin: 0 0 16px;
   color: var(--w97-text, #333);

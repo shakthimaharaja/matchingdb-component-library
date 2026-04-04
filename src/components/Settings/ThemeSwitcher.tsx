@@ -5,8 +5,9 @@ import React from "react";
 import { useTheme, type ThemeMode } from "../../theme";
 
 const modes: { id: ThemeMode; label: string; desc: string }[] = [
-  { id: "legacy", label: "Classic", desc: "Win 97 retro look" },
-  { id: "modern", label: "Modern", desc: "Clean SaaS dashboard" },
+  { id: "legacy", label: "W97", desc: "Win 97 retro look" },
+  { id: "classic", label: "AWS", desc: "AWS Console look" },
+  { id: "modern", label: "SaaS", desc: "Clean SaaS dashboard" },
 ];
 
 export interface ThemeSwitcherProps {

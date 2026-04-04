@@ -1,8 +1,11 @@
 /**
  * Button — Win97-styled button component.
  *
- * Variants: default | primary | poke | email | expand | download | close | reopen | matches
+ * Variants: default | primary | poke | email | expand | download | close |
+ *           reopen | matches | detail | detail-pdf | detail-send |
+ *           title-icon | modal-close | danger | muted | cta
  * Sizes:    xs | sm | md (default)
+ * Layout:   fullWidth | fill
  */
 import React from "react";
 
@@ -15,7 +18,15 @@ export type ButtonVariant =
   | "download"
   | "close"
   | "reopen"
-  | "matches";
+  | "matches"
+  | "detail"
+  | "detail-pdf"
+  | "detail-send"
+  | "title-icon"
+  | "modal-close"
+  | "danger"
+  | "muted"
+  | "cta";
 
 export type ButtonSize = "xs" | "sm" | "md";
 
@@ -23,6 +34,8 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  fullWidth?: boolean;
+  fill?: boolean;
 }
 
 const variantClass: Record<ButtonVariant, string> = {
@@ -35,26 +48,42 @@ const variantClass: Record<ButtonVariant, string> = {
   close: "matchdb-btn vdp-btn-close",
   reopen: "matchdb-btn vdp-btn-reopen",
   matches: "matchdb-btn vdp-btn-matches",
+  detail: "detail-btn",
+  "detail-pdf": "detail-btn detail-btn-pdf",
+  "detail-send": "detail-btn detail-btn-send",
+  "title-icon": "matchdb-btn matchdb-btn-xs matchdb-title-btn",
+  "modal-close": "detail-modal-close",
+  danger: "matchdb-btn matchdb-btn-danger",
+  muted: "matchdb-btn matchdb-btn-muted",
+  cta: "matchdb-btn matchdb-btn-primary matchdb-btn-cta",
 };
 
-const sizeStyle: Record<ButtonSize, React.CSSProperties | undefined> = {
-  xs: { height: 18, fontSize: 10, padding: "0 4px" },
-  sm: { height: 22, fontSize: 11, padding: "0 6px" },
-  md: undefined,
+const sizeClass: Record<ButtonSize, string> = {
+  xs: "matchdb-btn-xs",
+  sm: "matchdb-btn-sm",
+  md: "",
 };
 
 const Button: React.FC<ButtonProps> = ({
   variant = "default",
   size = "md",
+  fullWidth,
+  fill,
   className,
-  style,
   children,
   ...rest
 }) => {
-  const cls = [variantClass[variant], className].filter(Boolean).join(" ");
-  const mergedStyle = { ...sizeStyle[size], ...style };
+  const cls = [
+    variantClass[variant],
+    sizeClass[size],
+    fullWidth ? "matchdb-btn-full" : "",
+    fill ? "matchdb-btn-fill" : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <button type="button" className={cls} style={mergedStyle} {...rest}>
+    <button type="button" className={cls} {...rest}>
       {children}
     </button>
   );

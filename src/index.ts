@@ -25,10 +25,18 @@ export type {
 } from "./components/Button/Button";
 
 export { default as Input } from "./components/Input/Input";
-export type { InputProps } from "./components/Input/Input";
+export type {
+  InputProps,
+  InputSize,
+  InputVariant,
+} from "./components/Input/Input";
 
 export { default as Select } from "./components/Input/Select";
-export type { SelectProps } from "./components/Input/Select";
+export type {
+  SelectProps,
+  SelectSize,
+  SelectVariant,
+} from "./components/Input/Select";
 
 export { default as TypePill } from "./components/Badge/TypePill";
 export type { TypePillProps, PillStatus } from "./components/Badge/TypePill";
@@ -37,7 +45,7 @@ export { default as Alert } from "./components/Alert/Alert";
 export type { AlertProps, AlertVariant } from "./components/Alert/Alert";
 
 export { default as Shimmer } from "./components/Shimmer/Shimmer";
-export type { ShimmerProps } from "./components/Shimmer/Shimmer";
+export type { ShimmerProps, ShimmerSize } from "./components/Shimmer/Shimmer";
 
 export { default as MatchMeter } from "./components/MatchMeter/MatchMeter";
 export type {
@@ -45,11 +53,61 @@ export type {
   MeterVariant,
 } from "./components/MatchMeter/MatchMeter";
 
+// ── New Layout / Typography Components ──────────────────────────────────────
+export { default as Text } from "./components/Text/Text";
+export type {
+  TextProps,
+  TextSize,
+  TextWeight,
+  TextColor,
+  TextTransform,
+  TextAs,
+} from "./components/Text/Text";
+
+export { default as Stack } from "./components/Stack/Stack";
+export type {
+  StackProps,
+  StackDirection,
+  StackAlign,
+  StackGap,
+  StackPad,
+} from "./components/Stack/Stack";
+
+export { default as StatusBadge } from "./components/Badge/StatusBadge";
+export type {
+  StatusBadgeProps,
+  BadgeVariant,
+} from "./components/Badge/StatusBadge";
+
+export { default as FormField } from "./components/FormField/FormField";
+export type { FormFieldProps } from "./components/FormField/FormField";
+
+export { default as KpiCard } from "./components/KpiCard/KpiCard";
+export type {
+  KpiCardProps,
+  KpiSize,
+  KpiValueColor,
+} from "./components/KpiCard/KpiCard";
+
+export { default as EmptyState } from "./components/EmptyState/EmptyState";
+export type {
+  EmptyStateProps,
+  EmptyVariant,
+} from "./components/EmptyState/EmptyState";
+
+export { default as ProgressBar } from "./components/ProgressBar/ProgressBar";
+export type {
+  ProgressBarProps,
+  ProgressVariant,
+  ProgressSize,
+} from "./components/ProgressBar/ProgressBar";
+
 // ── Compound Components ─────────────────────────────────────────────────────
 export { default as DataTable } from "./components/DataTable/DataTable";
 export type {
   DataTableProps,
   DataTableColumn,
+  DataTableVariant,
 } from "./components/DataTable/DataTable";
 
 export { default as Toolbar } from "./components/Toolbar/Toolbar";
@@ -94,7 +152,7 @@ export { ThemeProvider, useTheme } from "./theme";
 export type {
   ThemeMode,
   ColorScheme,
-  TextSize,
+  TextSize as ThemeTextSize,
   ThemePreferences,
   ThemeContextValue,
   ThemeProviderProps,

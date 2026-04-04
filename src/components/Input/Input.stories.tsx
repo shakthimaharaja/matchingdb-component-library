@@ -10,9 +10,13 @@ const meta: Meta<typeof Input> = {
       control: "select",
       options: ["text", "number", "email", "password", "search"],
     },
+    size: {
+      control: "select",
+      options: ["xs", "sm", "md"],
+    },
+    fullWidth: { control: "boolean" },
     disabled: { control: "boolean" },
     placeholder: { control: "text" },
-    inputWidth: { control: "text" },
   },
 };
 export default meta;
@@ -23,12 +27,16 @@ export const Default: Story = {
   args: { placeholder: "Enter text…" },
 };
 
-export const WithWidth: Story = {
-  args: { placeholder: "Fixed width", inputWidth: 200 },
+export const Small: Story = {
+  args: { placeholder: "Small input", size: "sm" },
 };
 
-export const NumberInput: Story = {
-  args: { type: "number", placeholder: "0", inputWidth: 80 },
+export const ExtraSmall: Story = {
+  args: { placeholder: "XS", size: "xs" },
+};
+
+export const FullWidth: Story = {
+  args: { placeholder: "Full width", fullWidth: true },
 };
 
 export const Disabled: Story = {

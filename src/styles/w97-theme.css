@@ -53,6 +53,26 @@
   /* Shimmer skeleton */
   --w97-shimmer-base: #e8e8e8;
   --w97-shimmer-highlight: #f5f5f5;
+  /* Semantic text colors (for replacing hardcoded hex) */
+  --w97-text-muted: #888888;
+  --w97-text-placeholder: #aaaaaa;
+  --w97-text-hint: #999999;
+  --w97-link: #2a5fa0;
+  --w97-link-alt: #1a73e8;
+  --w97-error: #c62828;
+  --w97-error-light: #c00000;
+  --w97-success: #2e7d32;
+  /* Semantic backgrounds */
+  --w97-success-bg: #e8f5e9;
+  --w97-error-bg: #fff5f5;
+  --w97-surface: #f5f5f5;
+  --w97-surface-alt: #f0f0f0;
+  --w97-tag-bg: #d4d0c8;
+  --w97-tag-border: #a0a0a0;
+  --w97-section-heading: #003366;
+  --w97-info-label: #555555;
+  --w97-zebra-odd: #f0f0f0;
+  --w97-stripe-dark: #e8e8e8;
   /* MFE color chips for sidebar */
   --mfe-chip-1: #235a81;
   --mfe-chip-2: #2e7d32;
@@ -108,6 +128,25 @@
   /* Shimmer — dark */
   --w97-shimmer-base: #3a3a3a;
   --w97-shimmer-highlight: #4a4a4a;
+  /* Semantic text — dark */
+  --w97-text-muted: #808080;
+  --w97-text-placeholder: #666666;
+  --w97-text-hint: #777777;
+  --w97-link: #6ab0e8;
+  --w97-link-alt: #5da5e0;
+  --w97-error: #ef5350;
+  --w97-error-light: #e53935;
+  --w97-success: #66bb6a;
+  --w97-success-bg: #1b3a1b;
+  --w97-error-bg: #3a1b1b;
+  --w97-surface: #383838;
+  --w97-surface-alt: #333333;
+  --w97-tag-bg: #444444;
+  --w97-tag-border: #666666;
+  --w97-section-heading: #80b0e0;
+  --w97-info-label: #a0a0a0;
+  --w97-zebra-odd: #333333;
+  --w97-stripe-dark: #3a3a3a;
   --mfe-chip-1: #3a7aaa;
   --mfe-chip-2: #4caf50;
   --mfe-chip-3: #5090d0;

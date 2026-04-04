@@ -83,6 +83,8 @@ export interface DataTableColumn<T = unknown> {
 
 // ── Props ─────────────────────────────────────────────────────────────────────
 
+export type DataTableVariant = "default" | "summary";
+
 export interface DataTableProps<T = unknown> {
   /** Column definitions */
   columns: DataTableColumn<T>[];
@@ -92,6 +94,8 @@ export interface DataTableProps<T = unknown> {
   keyExtractor: (item: T) => string;
   /** Whether data is currently loading */
   loading?: boolean;
+  /** Visual variant */
+  variant?: DataTableVariant;
 
   // ── Title bar ──
   title?: string;
@@ -822,6 +826,7 @@ function DataTable<T>({
   data,
   keyExtractor,
   loading = false,
+  variant = "default",
   title,
   titleIcon,
   titleExtra,
@@ -829,7 +834,7 @@ function DataTable<T>({
   // Serial number (#) column — support both old and new prop names
   showRowNumbers,
   showSerialNumber,
-  serialNumberColumnWidth = 24,
+  serialNumberColumnWidth = 32,
   rnColWidth,
   serialNumberLabel = "#",
   serialNumberStartFrom = 1,
@@ -1117,6 +1122,7 @@ function DataTable<T>({
   // ── Render ──
   const wrapCls = [
     "matchdb-panel",
+    variant === "summary" && "matchdb-auto-height matchdb-dt-summary",
     denseMode && "matchdb-dense",
     scrollableColumns && "matchdb-hscroll",
     stickyFirstColumn && "matchdb-sticky-first",

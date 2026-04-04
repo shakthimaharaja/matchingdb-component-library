@@ -1,0 +1,12 @@
+/* =============================================================================
+   matchdb-component-library — Tailwind CSS Entry
+   Consumers import this file to activate Tailwind utility classes:
+     @import "matchdb-component-library/src/styles/tailwind.css";
+
+   This MUST be imported BEFORE components.css so that Tailwind's base/
+   component layers sit underneath component-specific overrides.
+   ============================================================================= */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
